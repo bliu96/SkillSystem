@@ -1,0 +1,11 @@
+battle = battle or {}
+
+local enums = {
+    EDurationPolicy = {
+        Instant = 1,
+        Infinite = 2,
+        HasDuration = 3,
+    },
+}
+
+battle.enums = enums

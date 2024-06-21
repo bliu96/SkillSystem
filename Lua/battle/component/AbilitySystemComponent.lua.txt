@@ -1,0 +1,5 @@
+---@class AbilitySystemComponent
+local AbilitySystemComponent = battle.class("AbilitySystemComponent")
+
+
+return AbilitySystemComponent

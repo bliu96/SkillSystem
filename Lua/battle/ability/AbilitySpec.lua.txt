@@ -1,0 +1,16 @@
+---@class AbilitySpec
+local AbilitySpec = {}
+
+---@return AbilitySpec
+function AbilitySpec:Create()
+    ---@type AbilitySpec
+    local spec = setmetatable({}, AbilitySpec)
+    
+    return spec
+end
+
+function AbilitySpec:Ctor()
+    
+end
+
+return AbilitySpec

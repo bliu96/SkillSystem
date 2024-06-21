@@ -1,0 +1,35 @@
+---@class GamePlayTagSet
+local GamePlayTagSet = battle.class("GamePlayTagSet")
+
+---@param tags  GamePlayTag[]
+function GamePlayTagSet:Ctor(tags)
+    ---@type GamePlayTag[]
+    self.tags = tags or {}
+end
+
+---@param tag GamePlayTag
+function GamePlayTagSet:HasTag(tag)
+    for i, v in ipairs(self.tags) do
+        if v:IsDescendantOf(tag) then
+            return true
+        end
+    end
+    return false
+end
+
+---@param tags GamePlayTag[]
+function GamePlayTagSet:HasAnyTags(tags)
+    for i, tag in ipairs(tags) do
+        if (self:HasTag(tag)) then
+            return true
+        end
+    end
+    return false
+end
+
+---@param other GamePlayTagSet
+function GamePlayTagSet:IntersectWith(other)
+    return self:HasAnyTags(other.tags)
+end
+
+return GamePlayTagSet

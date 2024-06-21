@@ -1,0 +1,8 @@
+---@class GameplayEffectPeriod
+local GameplayEffectPeriod = battle.class("GameplayEffectPeriod")
+
+function GameplayEffectPeriod:Ctor()
+    
+end
+
+return GameplayEffectPeriod

@@ -1,0 +1,115 @@
+---@class GamePlayTagConainter
+local GamePlayTagConainter = battle.class("GamePlayTagConainter")
+
+---@param owner AbilitySystemComponent
+function GamePlayTagConainter:Ctor(owner)
+    ---@type AbilitySystemComponent
+    self._owner = owner
+    ---@type GamePlayTag[]
+    self._fixedTags = {}
+    ---@type table<string, any[]>
+    self._dynamicAddedTags = {}
+    ---@type table<string, any[]>
+    self._dynamicRemovedTags = {}
+end
+
+function GamePlayTagConainter:Init(fixedTags)
+    self._fixedTags = fixedTags
+end
+
+---@param source GameplayEffectSpec | AbilitySpec
+---@param tag GamePlayTag
+---@return boolean dirty
+function GamePlayTagConainter:TryAddDynamicAddedTag(source, tag)
+    local dirty = false
+    if self._dynamicRemovedTags[tag.hashCode] then
+        dirty = true
+        self._dynamicRemovedTags[tag.hashCode] = nil
+    end
+    for _, v in ipairs(self._fixedTags) do
+        if v.hashCode == tag.hashCode then
+            return dirty
+        end
+    end
+    local sourceList = self._dynamicAddedTags[tag.hashCode]
+    if sourceList and next(sourceList) then
+        for _, o in ipairs(sourceList) do
+            if o == source then
+                return false
+            end
+        end
+        table.insert(sourceList, source)
+    else
+        self._dynamicAddedTags[tag.hashCode] = {source}
+    end
+    return true
+end
+
+---@param dynamicTag table<string, any[]>
+---@param source GameplayEffectSpec | AbilitySpec
+---@param tag GamePlayTag
+---@return boolean dirty
+function GamePlayTagConainter:TryRemoveDynamicTag(dynamicTag, source, tag)
+    local dirty = false
+    local sourceList = dynamicTag[tag]
+    if sourceList then
+        for i, v in ipairs(sourceList) do
+            if v == source then
+                table.remove(sourceList, i)
+                break
+            end
+        end
+        dirty = next(sourceList) ~= nil
+    end
+    return dirty
+end
+
+---@param source GameplayEffectSpec | AbilitySpec
+---@param tag GamePlayTag
+---@return boolean dirty
+function GamePlayTagConainter:TryRemoveDynamicAddedTag(source, tag)
+    return self:TryRemoveDynamicTag(self._dynamicAddedTags, source, tag)
+end
+
+---@param source GameplayEffectSpec | AbilitySpec
+---@param tags GamePlayTag[]
+---@return boolean dirty
+function GamePlayTagConainter:TryAddDynamicAddedTags(source, tags)
+    local dirty = false
+    for i, v in ipairs(tags) do
+        dirty = dirty or self:TryAddDynamicAddedTag(source, v)
+    end
+    return dirty
+end
+
+---@param source GameplayEffectSpec | AbilitySpec
+---@param tags GamePlayTag[]
+---@return boolean dirty
+function GamePlayTagConainter:TryRemoveDynamicAddedTags(source, tags)
+    local dirty = false
+    for i, v in ipairs(tags) do
+        dirty = dirty or self:TryRemoveDynamicAddedTag(source, v)
+    end
+    return dirty
+end
+
+-- todo 何时精确匹配
+---@param tag GamePlayTag
+function GamePlayTagConainter:HasTag(tag)
+    local contains = false
+    for i, v in ipairs(self._fixedTags) do
+        if v:IsDescendantOf(tag) then
+            contains = true
+            break
+        end
+    end
+    if not contains then
+        for v, _ in pairs(self._dynamicAddedTags) do
+            --- todo
+        end
+    end
+    -- todo
+    return contains
+end
+
+return GamePlayTagConainter

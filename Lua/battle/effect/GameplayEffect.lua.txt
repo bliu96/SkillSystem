@@ -1,0 +1,13 @@
+---@class GameplayEffect
+local GameplayEffect = battle.class("GameplayEffect")
+
+function GameplayEffect:Ctor()
+    ---@type GameplayEffectModifier[]
+    self.modifiers = nil
+    ---@type GameplayEffectTags
+    self.tags = nil
+    ---@type GameplayEffectPeriod
+    self.period = nil
+end
+
+return GameplayEffect

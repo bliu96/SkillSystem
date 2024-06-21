@@ -1,0 +1,4 @@
+---@class GameplayEffectTags
+local GameplayEffectTags = battle.class("GameplayEffectTags")
+
+return GameplayEffectTags

@@ -1,0 +1,42 @@
+---namespace
+battle = battle or {}
+
+function battle.class(className, super)
+	local cls = {__className = className}
+	
+	cls.Ctor = nil
+	cls.super = super
+	
+    local meta = {}
+	if super then
+        meta.__index = super
+	end
+	
+	meta.__call = function(t, ...) 
+		local inst={}
+		
+		do
+			local create
+			
+			create = function(c,...)
+				if c.super then
+					create(c.super,...)
+				end
+
+				if c.Ctor then
+					c.Ctor(inst,...)
+				end
+			end
+			
+ 			create(cls,...)
+		end
+		
+		setmetatable(inst,{ __index = cls})
+		
+		return inst
+	end
+
+    setmetatable(cls, meta)
+ 
+	return cls
+end

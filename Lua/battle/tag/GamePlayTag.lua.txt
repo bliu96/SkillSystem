@@ -1,0 +1,25 @@
+---@class GamePlayTag
+local GamePlayTag = battle.class("GamePlayTag")
+
+function GamePlayTag:Ctor(name)
+    self.name = name
+    self.hashCode = name
+
+    self._ancestor = {}
+
+    local ancestorTags = battle.utils.StringUtils.Split(name, ".")
+    for i, tag in ipairs(ancestorTags) do
+        self._ancestor[tag] = true
+    end
+end
+
+-- function GamePlayTag:Equals(other)
+--     return self.hasCode == other.hasCode
+-- end
+
+---@param other GamePlayTag
+function GamePlayTag:IsDescendantOf(other)
+    return self._ancestor[other.name] ~= nil
+end
+
+return GamePlayTag

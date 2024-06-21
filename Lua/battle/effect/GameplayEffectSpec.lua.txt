@@ -1,0 +1,14 @@
+---@class GameplayEffectSpec
+local GameplayEffectSpec = battle.class("GameplayEffectSpec")
+
+---@param gameplayEffect GameplayEffect
+function GameplayEffectSpec:Ctor(gameplayEffect)
+    ---@type GameplayEffect
+    self.gameplayEffect =gameplayEffect
+end
+
+function GameplayEffectSpec:Init(source)
+    self.source = source
+end
+
+return GameplayEffectSpec

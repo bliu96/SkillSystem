@@ -1,0 +1,371 @@
+<mxfile host="65bd71144e">
+    <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
+        <mxGraphModel dx="1459" dy="820" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="WIyWlLk6GJQsqaUBKTNV-0"/>
+                <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0"/>
+                <mxCell id="17" value="标签" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="630" y="330" width="140" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="18" value="不可清除" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="17">
+                    <mxGeometry y="30" width="140" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="19" value="不可抵抗" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="17">
+                    <mxGeometry y="60" width="140" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="105" value="限制行动" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="17">
+                    <mxGeometry y="90" width="140" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="58" value="能力" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="330" y="370" width="200" height="220" as="geometry"/>
+                </mxCell>
+                <mxCell id="62" value="消耗" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="58">
+                    <mxGeometry y="30" width="160" height="26" as="geometry"/>
+                </mxCell>
+                <mxCell id="63" value="优先级" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rounded=0;shadow=0;html=0;" vertex="1" parent="58">
+                    <mxGeometry y="56" width="200" height="26" as="geometry"/>
+                </mxCell>
+                <mxCell id="108" value="激活条件（合击角色是否在等等）" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rounded=0;shadow=0;html=0;" vertex="1" parent="58">
+                    <mxGeometry y="82" width="200" height="26" as="geometry"/>
+                </mxCell>
+                <mxCell id="213" value="激活逻辑" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rounded=0;shadow=0;html=0;" vertex="1" parent="58">
+                    <mxGeometry y="108" width="200" height="26" as="geometry"/>
+                </mxCell>
+                <mxCell id="69" value="效果" style="swimlane;whiteSpace=wrap;html=1;swimlaneLine=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="290" y="640" width="490" height="520" as="geometry"/>
+                </mxCell>
+                <mxCell id="70" value="标签" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="69">
+                    <mxGeometry y="24" width="200" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="81" value="堆叠" style="swimlane;whiteSpace=wrap;html=1;gradientColor=none;swimlaneFillColor=none;swimlaneHead=1;" vertex="1" parent="69">
+                    <mxGeometry x="240" y="337" width="170" height="116" as="geometry"/>
+                </mxCell>
+                <mxCell id="86" value="堆叠方式" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="81">
+                    <mxGeometry y="24" width="60" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="87" value="最大层数" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="81">
+                    <mxGeometry y="54" width="60" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="88" value="层数溢出时应用某效果" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="81">
+                    <mxGeometry y="84" width="140" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="91" value="修改器" style="swimlane;whiteSpace=wrap;html=1;gradientColor=none;swimlaneFillColor=none;swimlaneHead=1;" vertex="1" parent="69">
+                    <mxGeometry x="240" y="90" width="170" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="92" value="修改类型（属性、形象等）" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="91">
+                    <mxGeometry y="24" width="160" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="93" value="修改参数" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="91">
+                    <mxGeometry y="54" width="60" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="95" value="效果执行逻辑" style="swimlane;whiteSpace=wrap;html=1;gradientColor=none;swimlaneFillColor=none;swimlaneHead=1;" vertex="1" parent="69">
+                    <mxGeometry x="240" y="210" width="170" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="99" value="程序的复杂的效果计算，生成新的修改器" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="95">
+                    <mxGeometry y="30" width="140" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="100" value="组件（拓展）" style="swimlane;whiteSpace=wrap;html=1;gradientColor=none;swimlaneFillColor=none;swimlaneHead=1;" vertex="1" parent="69">
+                    <mxGeometry x="20" y="300" width="180" height="190" as="geometry"/>
+                </mxCell>
+                <mxCell id="102" value="满足某条件时，才使效果生效" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="100">
+                    <mxGeometry y="24" width="170" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="103" value="当前效果激活时，添加新的能力" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="100">
+                    <mxGeometry y="50" width="170" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="104" value="给角色添加标签" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="100">
+                    <mxGeometry y="110" width="170" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="107" value="当前效果激活时，根据标签免疫其他效果" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="100">
+                    <mxGeometry y="80" width="170" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="113" value="持续类型" style="swimlane;whiteSpace=wrap;html=1;gradientColor=none;swimlaneFillColor=none;swimlaneHead=1;" vertex="1" parent="69">
+                    <mxGeometry x="20" y="90" width="180" height="180" as="geometry"/>
+                </mxCell>
+                <mxCell id="114" value="瞬时（立即生效)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="113">
+                    <mxGeometry y="24" width="170" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="115" value="持续时间（有生效总时长。可以配置是否每隔一段时间执行修改器和效果执行逻辑）" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;resizable=1;" vertex="1" parent="113">
+                    <mxGeometry y="50" width="170" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="117" value="永久（无限持续，只能通过其他机制移除。可以配置是否每隔一段时间执行修改器和效果执行逻辑）" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;" vertex="1" parent="113">
+                    <mxGeometry y="100" width="170" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="215" value="添加逻辑、移除逻辑" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="69">
+                    <mxGeometry y="54" width="200" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="72" style="edgeStyle=none;html=1;entryX=0;entryY=0.25;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="70" target="17">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="73" value="角色" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="50" y="330" width="200" height="200" as="geometry"/>
+                </mxCell>
+                <mxCell id="74" value="标签" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="73">
+                    <mxGeometry y="24" width="200" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="75" value="能力列表（普攻能力、怒气能力、合击能力、被动能力）" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="73">
+                    <mxGeometry y="90" width="200" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="259" value="属性" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="73">
+                    <mxGeometry y="54" width="200" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="76" style="edgeStyle=none;html=1;entryX=-0.002;entryY=0.061;entryDx=0;entryDy=0;entryPerimeter=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="75" target="58">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="109" value="" style="curved=1;endArrow=classic;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.007;entryY=0.093;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="74" target="17">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="-20" y="270" as="sourcePoint"/>
+                        <mxPoint x="30" y="220" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="310" y="340"/>
+                            <mxPoint x="510" y="270"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="127" value="效果计算流程" style="swimlane;whiteSpace=wrap;html=1;gradientColor=none;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="20" y="1240" width="1090" height="590" as="geometry"/>
+                </mxCell>
+                <mxCell id="132" style="edgeStyle=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="127" source="128" target="129">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="133" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="127" source="128" target="130">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="134" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="127" source="128" target="131">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="128" value="效果添加" style="rounded=0;whiteSpace=wrap;html=1;gradientColor=none;" vertex="1" parent="127">
+                    <mxGeometry x="20" y="115" width="90" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="136" style="edgeStyle=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="127" source="129" target="135">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="380" y="60"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="129" value="瞬时" style="rounded=0;whiteSpace=wrap;html=1;gradientColor=none;" vertex="1" parent="127">
+                    <mxGeometry x="140" y="40" width="90" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="216" style="edgeStyle=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;startArrow=none;" edge="1" parent="127" source="239" target="135">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="241" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="127" source="130" target="239">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="130" value="永久" style="rounded=0;whiteSpace=wrap;html=1;gradientColor=none;" vertex="1" parent="127">
+                    <mxGeometry x="140" y="115" width="90" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="242" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="127" source="131" target="239">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="131" value="持续时间" style="rounded=0;whiteSpace=wrap;html=1;gradientColor=none;" vertex="1" parent="127">
+                    <mxGeometry x="140" y="190" width="90" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="140" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="127" source="135" target="137">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="135" value="修改器中修改的属性添加到结算列表" style="rounded=0;whiteSpace=wrap;html=1;gradientColor=none;" vertex="1" parent="127">
+                    <mxGeometry x="410" y="115" width="120" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="142" style="edgeStyle=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="127" source="137" target="141">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="137" value="效果执行逻辑，经过复杂计算，添加结果到结算列表" style="rounded=0;whiteSpace=wrap;html=1;gradientColor=none;" vertex="1" parent="127">
+                    <mxGeometry x="550" y="115" width="150" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="227" style="edgeStyle=none;html=1;" edge="1" parent="127" source="141" target="214">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="228" value="永久、持续时间" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="227">
+                    <mxGeometry x="-0.3605" relative="1" as="geometry">
+                        <mxPoint x="22" y="-20" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="141" value="结算列表进行结算" style="rounded=0;whiteSpace=wrap;html=1;gradientColor=none;" vertex="1" parent="127">
+                    <mxGeometry x="730" y="115" width="90" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="150" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="127" source="143" target="145">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="151" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="127" source="143" target="146">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="143" value="效果每隔一定时间（可选）" style="rounded=0;whiteSpace=wrap;html=1;gradientColor=none;" vertex="1" parent="127">
+                    <mxGeometry x="20" y="320" width="90" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="152" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="127" source="145" target="147">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="145" value="永久" style="rounded=0;whiteSpace=wrap;html=1;gradientColor=none;" vertex="1" parent="127">
+                    <mxGeometry x="140" y="290" width="90" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="153" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="127" target="147">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="230" y="370" as="sourcePoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="146" value="持续时间" style="rounded=0;whiteSpace=wrap;html=1;gradientColor=none;" vertex="1" parent="127">
+                    <mxGeometry x="140" y="350" width="90" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="154" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="127" source="147" target="148">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="147" value="修改器中修改的属性添加到结算列表" style="rounded=0;whiteSpace=wrap;html=1;gradientColor=none;" vertex="1" parent="127">
+                    <mxGeometry x="290" y="335" width="120" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="155" style="edgeStyle=none;html=1;" edge="1" parent="127" source="148" target="149">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="148" value="效果执行逻辑，经过复杂计算，添加结果到结算列表" style="rounded=0;whiteSpace=wrap;html=1;gradientColor=none;" vertex="1" parent="127">
+                    <mxGeometry x="440" y="335" width="150" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="149" value="结算列表进行结算" style="rounded=0;whiteSpace=wrap;html=1;gradientColor=none;" vertex="1" parent="127">
+                    <mxGeometry x="620" y="335" width="90" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="160" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="127" source="156" target="157">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="161" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="127" source="156" target="158">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="156" value="效果移除" style="rounded=0;whiteSpace=wrap;html=1;gradientColor=none;" vertex="1" parent="127">
+                    <mxGeometry x="20" y="490" width="90" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="220" style="edgeStyle=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="127" source="157" target="159">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="270" y="514.0000000000005" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="157" value="永久" style="rounded=0;whiteSpace=wrap;html=1;gradientColor=none;" vertex="1" parent="127">
+                    <mxGeometry x="140" y="464" width="90" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="158" value="持续时间" style="rounded=0;whiteSpace=wrap;html=1;gradientColor=none;" vertex="1" parent="127">
+                    <mxGeometry x="140" y="524" width="90" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="224" style="edgeStyle=none;html=1;" edge="1" parent="127" source="159" target="223">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="159" value="还原修改器中修改的属性" style="rounded=0;whiteSpace=wrap;html=1;gradientColor=none;" vertex="1" parent="127">
+                    <mxGeometry x="330" y="494" width="120" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="214" value="效果添加逻辑" style="rounded=0;whiteSpace=wrap;html=1;gradientColor=none;" vertex="1" parent="127">
+                    <mxGeometry x="930" y="115" width="90" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="223" value="效果移除逻辑" style="rounded=0;whiteSpace=wrap;html=1;gradientColor=none;" vertex="1" parent="127">
+                    <mxGeometry x="510" y="494" width="90" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="221" style="edgeStyle=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="127" source="158" target="159">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="270" y="510" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="239" value="计算堆叠" style="rounded=0;whiteSpace=wrap;html=1;gradientColor=none;" vertex="1" parent="127">
+                    <mxGeometry x="290" y="115" width="90" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="165" value="角色出手流程" style="swimlane;whiteSpace=wrap;html=1;fillColor=none;gradientColor=none;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="20" y="1860" width="990" height="200" as="geometry"/>
+                </mxCell>
+                <mxCell id="168" style="edgeStyle=none;html=1;" edge="1" parent="165" source="166" target="167">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="166" value="遍历角色拥有的能力，选择优先级高，且满足激活条件的能力" style="rounded=0;whiteSpace=wrap;html=1;gradientColor=none;" vertex="1" parent="165">
+                    <mxGeometry x="330" y="37.5" width="140" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="171" style="edgeStyle=none;html=1;" edge="1" parent="165" source="167" target="169">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="167" value="能力激活逻辑" style="rounded=0;whiteSpace=wrap;html=1;gradientColor=none;" vertex="1" parent="165">
+                    <mxGeometry x="520" y="52.5" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="237" style="edgeStyle=none;html=1;" edge="1" parent="165" source="169" target="236">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="169" value="计算目标和施加的效果" style="rounded=0;whiteSpace=wrap;html=1;gradientColor=none;" vertex="1" parent="165">
+                    <mxGeometry x="660" y="52.5" width="116" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="176" style="edgeStyle=none;html=1;" edge="1" parent="165" source="172" target="175">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="172" value="效果计算&lt;br&gt;流程" style="rounded=0;whiteSpace=wrap;html=1;gradientColor=none;" vertex="1" parent="165">
+                    <mxGeometry x="820" y="122.5" width="116" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="175" value="结束能力" style="rounded=0;whiteSpace=wrap;html=1;gradientColor=none;" vertex="1" parent="165">
+                    <mxGeometry x="690" y="122.5" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="233" style="edgeStyle=none;html=1;" edge="1" parent="165" source="230" target="232">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="230" value="出手前更新持续时间（触发身上的持续时间效果）" style="rounded=0;whiteSpace=wrap;html=1;gradientColor=none;" vertex="1" parent="165">
+                    <mxGeometry x="30" y="47.5" width="100" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="234" style="edgeStyle=none;html=1;" edge="1" parent="165" source="232" target="166">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="235" value="可以行动" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="234">
+                    <mxGeometry x="-0.493" y="-1" relative="1" as="geometry">
+                        <mxPoint x="15" y="-11" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="232" value="身上是否有限制行动的标签" style="rounded=0;whiteSpace=wrap;html=1;gradientColor=none;" vertex="1" parent="165">
+                    <mxGeometry x="170" y="47.5" width="100" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="238" style="edgeStyle=none;html=1;" edge="1" parent="165" source="236" target="172">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="236" value="更新持续时间（可能会有效果移除）" style="rounded=0;whiteSpace=wrap;html=1;gradientColor=none;" vertex="1" parent="165">
+                    <mxGeometry x="828" y="47.5" width="100" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="177" value="被动角色出手流程" style="swimlane;whiteSpace=wrap;html=1;fillColor=none;gradientColor=none;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="27" y="2090" width="800" height="210" as="geometry"/>
+                </mxCell>
+                <mxCell id="189" style="edgeStyle=none;html=1;" edge="1" parent="177" source="187" target="188">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="187" value="角色出场时添加通用的被动能力（触发时机、概率、次数)，并永久激活" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;gradientColor=none;" vertex="1" parent="177">
+                    <mxGeometry x="12" y="45" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="191" style="edgeStyle=none;html=1;" edge="1" parent="177" source="188" target="190">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="192" value="满足条件时" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="191">
+                    <mxGeometry x="-0.4982" y="2" relative="1" as="geometry">
+                        <mxPoint x="15" y="-8" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="188" value="能力激活逻辑，添加对特定条件的监听" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;gradientColor=none;" vertex="1" parent="177">
+                    <mxGeometry x="172" y="45" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="194" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="177" source="190" target="193">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="195" value="队列轮到本能力" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="194">
+                    <mxGeometry x="-0.1985" y="-1" relative="1" as="geometry">
+                        <mxPoint x="8" y="-11" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="190" value="给角色添加临时的能力，添加到触发队列" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;gradientColor=none;" vertex="1" parent="177">
+                    <mxGeometry x="362" y="45" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="198" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="177" source="193" target="197">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="193" value="计算目标和施加的效果" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;gradientColor=none;" vertex="1" parent="177">
+                    <mxGeometry x="572" y="45" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="212" style="edgeStyle=none;html=1;" edge="1" parent="177" source="197" target="211">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="197" value="效果计算&lt;br&gt;流程" style="rounded=0;whiteSpace=wrap;html=1;gradientColor=none;" vertex="1" parent="177">
+                    <mxGeometry x="584" y="150" width="96" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="211" value="继续其他战斗逻辑" style="rounded=0;whiteSpace=wrap;html=1;gradientColor=none;" vertex="1" parent="177">
+                    <mxGeometry x="410" y="150" width="116" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="258" value="&lt;h1&gt;战斗表现&lt;/h1&gt;&lt;p&gt;角色血条下方可以显示持续或永久的效果icon&lt;/p&gt;&lt;p&gt;角色添加新的持续或永久的效果时播放飘字&lt;/p&gt;&lt;p&gt;角色属性发生变化时（血量、怒气），播放冒字&lt;/p&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="840" y="660" width="190" height="330" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
