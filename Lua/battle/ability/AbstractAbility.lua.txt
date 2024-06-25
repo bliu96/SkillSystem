@@ -1,8 +1,0 @@
----@class AbstractAbility
-local AbstractAbility = battle.class("AbstractAbility")
-
-function AbstractAbility:Ctor()
-    
-end
-
-return AbstractAbility

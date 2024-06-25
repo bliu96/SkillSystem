@@ -1,0 +1,10 @@
+---@class ModifierMagnitudeCalculation
+local ModifierMagnitudeCalculation = battle.class("ModifierMagnitudeCalculation")
+
+---@param geSpec  GameplayEffectSpec
+---@param modifierMagnitude number
+function ModifierMagnitudeCalculation:CalculateMagnitude(geSpec, modifierMagnitude)
+    return 0
+end
+
+return ModifierMagnitudeCalculation

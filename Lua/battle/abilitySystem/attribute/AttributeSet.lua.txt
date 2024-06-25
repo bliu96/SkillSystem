@@ -1,0 +1,35 @@
+---@class AttributeSet
+local AttributeSet = battle.class("AttributeSet")
+
+function AttributeSet:Ctor(initialAtrributes)
+    self.initialAtrributes = initialAtrributes
+    
+    self._baseAttrs = setmetatable({}, {__index = initialAtrributes})
+    self._currentAttrs = setmetatable({}, {__index = self._baseAttrs})
+end
+
+function AttributeSet:GetCurrentValue(attributeType)
+    return self._currentAttrs[attributeType] or 0
+end
+
+function AttributeSet:SetCurrentValue(attributeType, value)
+    self._currentAttrs[attributeType] = value
+end
+
+function AttributeSet:GetBaseValue(attributeType)
+    return self._baseAttrs[attributeType] or 0
+end
+
+function AttributeSet:SetBaseValue(attributeType, value)
+    self._baseAttrs[attributeType] = value
+end
+
+function AttributeSet:OnAttributeChange()
+    
+end
+
+function AttributeSet:PostGameplayEffectExecute()
+    
+end
+
+return AttributeSet

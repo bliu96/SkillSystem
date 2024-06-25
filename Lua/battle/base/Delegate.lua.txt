@@ -1,0 +1,57 @@
+battle = battle or {}
+
+---@class battle.Delegate
+local Delegate = battle.class("Delegate")
+
+function Delegate:Ctor()
+    ---@type function[]
+    self._actions = {}
+    
+    self._invoking = false
+    
+    ---@type function[]
+    self._toRemoved = {}
+end
+
+function Delegate:Add(action)
+    table.insert(self._actions, action)
+end
+
+function Delegate:Remove(action)
+    if self._invoking then
+        table.insert(self._toRemoved, action)
+    else
+        for i, v in ipairs(self._actions) do
+            if v == action then
+                table.remove(self._actions, i)
+                return
+            end
+        end
+    end
+end
+
+function Delegate:Invoke(...)
+    if not next(self._actions) then
+        return
+    end
+    
+    self._invoking = true
+    for i, action in ipairs(self._actions) do
+        action(...)
+    end
+    self._invoking = false
+    
+    if next(self._toRemoved) then
+        for i, v in ipairs(self._toRemoved) do
+            self:Remove(v)
+        end
+        self._toRemoved = {}
+    end
+end
+
+function Delegate:Clear()
+    self._actions = {}
+    self._toRemoved = {}
+end
+
+battle.Delegate = Delegate

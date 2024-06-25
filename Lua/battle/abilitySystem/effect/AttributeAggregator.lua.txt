@@ -1,0 +1,99 @@
+local ModifierOperation = battle.enums.ModifierOperation
+
+---@class AggregatorMod
+---@field evaluatedMagnitude number
+---@field modOp number
+---@field geSpec any
+
+---@class AttributeAggregator
+---@field New fun(attributeType : number) : AttributeAggregator
+local AttributeAggregator = battle.class("AttributeAggregator")
+
+function AttributeAggregator:Ctor(attributeType)
+    ---@type battle.Delegate
+    self.onDirty = battle.Delegate()
+
+    ---@type table<number, AggregatorMod[]>
+    self.mods = {}
+
+    self.attributeType = attributeType
+end
+
+function AttributeAggregator:EvaluateWithBase(baseValue)
+    local overrides = self.mods[ModifierOperation.Override]
+    if overrides then
+        local overrideMod = overrides[1]
+        if overrideMod then
+            return overrideMod.evaluatedMagnitude
+        end
+    end
+
+    local add = self:SumMods(ModifierOperation.Additive)
+    local sub = self:SumMods(ModifierOperation.Subtractive)
+    local mul = self:SumMods(ModifierOperation.Multiplicitive)
+
+    return (baseValue + add - sub) * (1 + mul)
+end
+
+function AttributeAggregator:SumMods(operation)
+    local mods = self.mods[operation]
+    local sum = 0
+    if mods then
+        for i, mod in ipairs(mods) do
+            sum = sum + mod.evaluatedMagnitude
+        end
+    end
+    return sum
+end
+
+---@param evaluatedMagnitude number
+---@param modOp number
+---@param geSpec GameplayEffectSpec
+function AttributeAggregator:AddAggregatorMod(evaluatedMagnitude, modOp, geSpec)
+    local mods = self.mods[modOp]
+    if not mods then
+        mods = {}
+        self.mods[modOp] = mods
+    end
+    table.insert(mods, {
+        evaluatedMagnitude = evaluatedMagnitude,
+        modOp = modOp,
+        geSpec = geSpec,
+    })
+
+    self:BroadcastOnDirty()
+end
+
+function AttributeAggregator:RemoveAggregatorMod(geSpec)
+    for i = 1, ModifierOperation.Max - 1 do
+        local mods = self.mods[i]
+        if mods then
+            for j = #mods, 1, -1 do
+                local mod = mods[j]
+                if mod.geSpec == geSpec then
+                    table.remove(mods, j)
+                end
+            end
+        end
+    end
+    self:BroadcastOnDirty()
+end
+
+function AttributeAggregator:BroadcastOnDirty()
+    self.onDirty:Invoke(self)
+end
+
+function AttributeAggregator.StaticExecModOnBaseValue(baseValue, modifierOp, magnitude)
+    if modifierOp == ModifierOperation.Override then
+        baseValue = magnitude
+    elseif modifierOp == ModifierOperation.Additive then
+        baseValue = baseValue + magnitude
+    elseif modifierOp == ModifierOperation.Subtractive then
+        baseValue = baseValue - magnitude
+    elseif modifierOp == ModifierOperation.Multiplicitive then
+        baseValue = baseValue * (1 + magnitude)
+    end
+    return baseValue
+end
+
+return AttributeAggregator

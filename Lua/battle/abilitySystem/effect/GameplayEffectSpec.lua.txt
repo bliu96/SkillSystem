@@ -1,0 +1,66 @@
+---@class ModifierSpec
+---@field evaluatedMagnitude number
+
+---@class GameplayEffectSpec
+local GameplayEffectSpec = battle.class("GameplayEffectSpec")
+
+---@param gameplayEffect GameplayEffect
+function GameplayEffectSpec:Ctor(gameplayEffect)
+    ---@type GameplayEffect
+    self.def = gameplayEffect
+    ---@type AbilitySystemComponent
+    self.source = nil
+    ---@type AbilitySystemComponent
+    self.target = nil
+
+    self._passedTime = 0
+    self._duration = 0
+    self._periodRemaining = self.def.period
+    self.isActive = false
+end
+
+function GameplayEffectSpec:Init(source)
+    self.source = source
+end
+
+function GameplayEffectSpec:CanApply()
+    
+end
+
+function GameplayEffectSpec:CalculateModifierMagnitudes()
+    
+end
+
+-- function GameplayEffectSpec:UpdatePassedTime(dt)
+--     self._passedTime = self._passedTime + dt
+--     if self._passedTime >= self._duration then
+        
+--     end
+-- end
+
+-- function GameplayEffectSpec:TickPeriodic(dt)
+--     local executePeriodic = false
+--     self._periodRemaining = self._periodRemaining - dt
+--     if self._periodRemaining <= 0 then
+--         executePeriodic = true
+--         self._periodRemaining = self.def.period
+--     end
+
+--     return executePeriodic
+-- end
+
+function GameplayEffectSpec:Tick(dt)
+    self._periodRemaining = self._periodRemaining - dt
+    if self._periodRemaining <= 0 then
+        self._periodRemaining = self.def.period
+        
+        self.target:ExecuteGameplayEffect(self)
+    end
+
+    self._passedTime = self._passedTime + dt
+    if self._passedTime >= self._duration then
+        self.target:RemoveGameplayEffectSpec(self)
+    end
+end
+
+return GameplayEffectSpec

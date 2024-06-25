@@ -1,0 +1,2 @@
+require("battle.base.Functions")
+require("battle.base.Delegate")

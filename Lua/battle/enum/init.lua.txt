@@ -1,10 +1,20 @@
 battle = battle or {}
 
 local enums = {
-    EDurationPolicy = {
+    ---@class DurationPolicy
+    DurationPolicy = {
         Instant = 1,
         Infinite = 2,
         HasDuration = 3,
+    },
+    ---@class ModifierOperation
+    ModifierOperation = {
+        Additive = 1,
+        Subtractive = 2,
+        Multiplicitive = 3,
+        Division = 4,
+        Override = 5,
+        Max = 6,
     },
 }
 

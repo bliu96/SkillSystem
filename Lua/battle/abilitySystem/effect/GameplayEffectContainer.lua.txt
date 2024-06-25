@@ -1,0 +1,133 @@
+local AttributeAggregator = require("battle.effect.AttributeAggregator")
+
+---@class GameplayEffectContainer
+local GameplayEffectContainer = battle.class("GameplayEffectContainer")
+
+function GameplayEffectContainer:Ctor()
+    ---@type AbilitySystemComponent
+    self.asc = nil
+    ---@type GameplayEffectSpec[]
+    self._geSpecs = {}
+    ---@type table<number, AttributeAggregator>
+    self._attributeAggregatorMap = {}
+end
+
+---@param geSpec GameplayEffectSpec
+function GameplayEffectContainer:AddGameplayEffectSpec(geSpec)
+    table.insert(self._geSpecs, geSpec)
+
+    -- todo stack
+    
+    local isActive = geSpec.def:OnAddedToActiveContainer()
+    self:SetActiveGameplayEffect(geSpec, isActive)
+end
+
+---@param geSpec GameplayEffectSpec
+---@param isActive boolean
+function GameplayEffectContainer:SetActiveGameplayEffect(geSpec, isActive)
+    if geSpec.isActive ~= isActive then
+        geSpec.isActive = isActive
+
+        if isActive then
+            self:AddActiveGameplayEffectTagsAndModifiers(geSpec)
+        else
+            self:RemoveActiveGameplayEffectTagsAndModifiers(geSpec)
+        end
+    end
+end
+
+---@param geSpec GameplayEffectSpec
+function GameplayEffectContainer:AddActiveGameplayEffectTagsAndModifiers(geSpec)
+    local effectDef = geSpec.def
+    if effectDef.period <= 0 then
+        local modifiers = effectDef.modifiers
+        for i, modifier in ipairs(modifiers) do
+            local attributeType = modifier.attributeType
+            local aggregator = self._attributeAggregatorMap[attributeType]
+            if not aggregator then
+                aggregator = AttributeAggregator.New(attributeType)
+                aggregator.onDirty:Add(battle.wrap(self, self._OnAttributeAggregatorDirty))
+                
+                self._attributeAggregatorMap[attributeType] = aggregator
+            end
+            local evaluatedMagnitude = modifier:CalculateMagnitude(geSpec)
+            aggregator:AddAggregatorMod(evaluatedMagnitude, modifier.operation, geSpec)
+        end
+    end
+end
+
+---@param geSpec GameplayEffectSpec
+function GameplayEffectContainer:RemoveActiveGameplayEffectTagsAndModifiers(geSpec)
+    local effectDef = geSpec.def
+    if effectDef.period <= 0 then
+        local modifiers = effectDef.modifiers
+        for i, modifier in ipairs(modifiers) do
+            local attributeType = modifier.attributeType
+            local aggregator = self._attributeAggregatorMap[attributeType]
+            if aggregator then
+                aggregator:RemoveAggregatorMod(geSpec)
+            end
+        end
+    end
+end
+
+function GameplayEffectContainer:Tick(dt)
+    for i, geSpec in ipairs(self._geSpecs) do
+        geSpec:Tick(dt)
+    end
+end
+
+---@param geSpecToRemove GameplayEffectSpec
+function GameplayEffectContainer:RemoveGameplayEffectSpec(geSpecToRemove)
+    for i, geSpec in ipairs(self._geSpecs) do
+        if geSpec == geSpecToRemove then
+            table.remove(self._geSpecs, i)
+            if geSpec.isActive then
+                self:RemoveActiveGameplayEffectTagsAndModifiers(geSpec)
+            end
+            return
+        end
+    end
+end
+
+---@param geSpec GameplayEffectSpec
+function GameplayEffectContainer:ExecuteGameplayEffectFrom(geSpec)
+    local attributeSet = self.asc.attributeSet
+    local modifiers = geSpec.def.modifiers
+    for i, modifier in ipairs(modifiers) do
+        local attributeType = modifier.attributeType
+        local magnitude = modifier:CalculateMagnitude(geSpec)
+        self:ApplyModToAttribute(attributeType, modifier.operation, magnitude)
+
+        attributeSet:PostGameplayEffectExecute()
+    end
+end
+
+function GameplayEffectContainer:ApplyModToAttribute(attributeType, modifierOp, magnitude)
+    local currentBase = self.asc.attributeSet:GetBaseValue(attributeType)
+    local newBase = AttributeAggregator.StaticExecModOnBaseValue(currentBase, modifierOp, magnitude)
+    self:SetAttributeBaseValue(attributeType, newBase)
+end
+
+function GameplayEffectContainer:SetAttributeBaseValue(attributeType, newValue)
+    local attributeSet = self.asc.attributeSet
+    attributeSet:SetBaseValue(attributeType, newValue)
+
+    local aggregator = self._attributeAggregatorMap[attributeType]
+    if aggregator then
+        aggregator:BroadcastOnDirty()
+    end
+end
+
+---@param aggregator AttributeAggregator
+function GameplayEffectContainer:_OnAttributeAggregatorDirty(aggregator)
+    local attributeType = aggregator.attributeType
+    -- todo 回合制游戏不会即使更新，应该有统一更新的时间点
+
+    local attributeSet = self.asc.attributeSet
+    local baseValue = attributeSet:GetBaseValue(attributeType)
+    local currentValue = aggregator:EvaluateWithBase(baseValue)
+    attributeSet:SetCurrentValue(attributeType, currentValue)
+end
+
+return GameplayEffectContainer

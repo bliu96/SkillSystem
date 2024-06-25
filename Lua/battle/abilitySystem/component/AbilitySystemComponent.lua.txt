@@ -1,0 +1,73 @@
+local DurationPolicy = battle.enums.DurationPolicy
+
+---@class AbilitySystemComponent
+local AbilitySystemComponent = battle.class("AbilitySystemComponent")
+
+function AbilitySystemComponent:Ctor()
+    ---@type AttributeSet
+    self.attributeSet = nil
+    ---@type GameplayEffectContainer
+    self.gameplayEffectContainer = {}
+    ---@type GameplayAbilitySpec[]
+    self.grantedAbilities = {}
+end
+
+---@param abilitySpec GameplayAbilitySpec
+function AbilitySystemComponent:GrantAbility(abilitySpec)
+    table.insert(self.grantedAbilities, abilitySpec)
+end
+
+---@param abilitySpec GameplayAbilitySpec
+function AbilitySystemComponent:RemoveAbility(abilitySpec)
+    for i, v in ipairs(self.grantedAbilities) do
+        if v == abilitySpec then
+            table.remove(self.grantedAbilities, i)
+            if v.isActive then
+                v:EndAbility()
+            end
+            return
+        end
+    end
+end
+
+---@param abilitySpec GameplayAbilitySpec
+function AbilitySystemComponent:TryActivateAbility(abilitySpec)
+    if not abilitySpec:CanActivateAbility() then
+        return false
+    end
+    abilitySpec:ActivateAbility()
+end
+
+---@param abilitySpec GameplayAbilitySpec
+function AbilitySystemComponent:CancelAbility(abilitySpec)
+    abilitySpec:EndAbility()
+end
+
+---@param geSpec GameplayEffectSpec
+function AbilitySystemComponent:ApplyGameplayEffectSpecToSelf(geSpec)
+    if not geSpec:CanApply() then
+        return
+    end
+
+    if geSpec.def.durationPolicy == DurationPolicy.Instant then
+        self:ExecuteGameplayEffect(geSpec)
+    else
+        self.gameplayEffectContainer:AddGameplayEffectSpec(geSpec)
+    end
+end
+
+---@param geSpec GameplayEffectSpec
+function AbilitySystemComponent:RemoveGameplayEffectSpec(geSpec)
+    self.gameplayEffectContainer:RemoveGameplayEffectSpec(geSpec)
+end
+
+---@param geSpec GameplayEffectSpec
+function AbilitySystemComponent:ExecuteGameplayEffect(geSpec)
+    self.gameplayEffectContainer:ExecuteGameplayEffectFrom(geSpec)
+end
+
+function AbilitySystemComponent:TickComponent(dt)
+    self.gameplayEffectContainer:Tick(dt)
+end
+
+return AbilitySystemComponent

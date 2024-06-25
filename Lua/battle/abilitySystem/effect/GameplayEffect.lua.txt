@@ -1,3 +1,5 @@
+local DurationPolicy = battle.enums.DurationPolicy
+
 ---@class GameplayEffect
 local GameplayEffect = battle.class("GameplayEffect")
 
@@ -6,8 +8,14 @@ function GameplayEffect:Ctor()
     self.modifiers = nil
     ---@type GameplayEffectTags
     self.tags = nil
-    ---@type GameplayEffectPeriod
+    ---@type number
     self.period = nil
+    self.durationPolicy = DurationPolicy.Instant
+end
+
+function GameplayEffect:OnAddedToActiveContainer()
+    local shouldBeActive = true
+    return shouldBeActive
 end
 
 return GameplayEffect

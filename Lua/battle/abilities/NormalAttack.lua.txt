@@ -1,0 +1,3 @@
+local NormalAttack = battle.class("NormalAttack")
+
+return NormalAttack

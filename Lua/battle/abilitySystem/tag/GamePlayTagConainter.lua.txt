@@ -17,7 +17,7 @@ function GamePlayTagConainter:Init(fixedTags)
     self._fixedTags = fixedTags
 end
 
----@param source GameplayEffectSpec | AbilitySpec
+---@param source GameplayEffectSpec | GameplayAbilitySpec
 ---@param tag GamePlayTag
 ---@return boolean dirty
 function GamePlayTagConainter:TryAddDynamicAddedTag(source, tag)
@@ -46,7 +46,7 @@ function GamePlayTagConainter:TryAddDynamicAddedTag(source, tag)
 end
 
 ---@param dynamicTag table<string, any[]>
----@param source GameplayEffectSpec | AbilitySpec
+---@param source GameplayEffectSpec | GameplayAbilitySpec
 ---@param tag GamePlayTag
 ---@return boolean dirty
 function GamePlayTagConainter:TryRemoveDynamicTag(dynamicTag, source, tag)
@@ -64,14 +64,14 @@ function GamePlayTagConainter:TryRemoveDynamicTag(dynamicTag, source, tag)
     return dirty
 end
 
----@param source GameplayEffectSpec | AbilitySpec
+---@param source GameplayEffectSpec | GameplayAbilitySpec
 ---@param tag GamePlayTag
 ---@return boolean dirty
 function GamePlayTagConainter:TryRemoveDynamicAddedTag(source, tag)
     return self:TryRemoveDynamicTag(self._dynamicAddedTags, source, tag)
 end
 
----@param source GameplayEffectSpec | AbilitySpec
+---@param source GameplayEffectSpec | GameplayAbilitySpec
 ---@param tags GamePlayTag[]
 ---@return boolean dirty
 function GamePlayTagConainter:TryAddDynamicAddedTags(source, tags)
@@ -82,7 +82,7 @@ function GamePlayTagConainter:TryAddDynamicAddedTags(source, tags)
     return dirty
 end
 
----@param source GameplayEffectSpec | AbilitySpec
+---@param source GameplayEffectSpec | GameplayAbilitySpec
 ---@param tags GamePlayTag[]
 ---@return boolean dirty
 function GamePlayTagConainter:TryRemoveDynamicAddedTags(source, tags)

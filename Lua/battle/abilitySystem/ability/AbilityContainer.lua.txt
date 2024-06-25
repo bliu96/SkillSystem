@@ -1,0 +1,9 @@
+---@class AbilityContainer
+local AbilityContainer = battle.class("AbilityContainer")
+
+---@param abilitySpec GameplayAbilitySpec
+function AbilityContainer:Add(abilitySpec)
+    
+end
+
+return AbilityContainer

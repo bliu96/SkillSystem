@@ -1,0 +1,21 @@
+---@class GameplayAbilitySpec
+local GameplayAbilitySpec = battle.class("GameplayAbilitySpec")
+
+function GameplayAbilitySpec:Ctor()
+    self.owner = nil
+    self.isActive = false
+end
+
+function GameplayAbilitySpec:CanActivateAbility()
+    
+end
+
+function GameplayAbilitySpec:ActivateAbility()
+    
+end
+
+function GameplayAbilitySpec:EndAbility()
+    
+end
+
+return GameplayAbilitySpec

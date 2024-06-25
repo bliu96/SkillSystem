@@ -1,8 +1,0 @@
----@class GameplayEffectModifier
-local GameplayEffectModifier = battle.class("GameplayEffectModifier")
-
-function GameplayEffectModifier:Ctor()
-    
-end
-
-return GameplayEffectModifier

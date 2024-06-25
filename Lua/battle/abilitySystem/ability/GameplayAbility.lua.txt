@@ -1,0 +1,8 @@
+---@class GameplayAbility
+local GameplayAbility = battle.class("GameplayAbility")
+
+function GameplayAbility:Ctor()
+    
+end
+
+return GameplayAbility

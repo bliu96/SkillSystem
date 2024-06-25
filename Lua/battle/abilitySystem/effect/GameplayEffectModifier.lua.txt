@@ -1,0 +1,24 @@
+local ModifierOperation = battle.enums.ModifierOperation
+
+---@class GameplayEffectModifier
+local GameplayEffectModifier = battle.class("GameplayEffectModifier")
+
+function GameplayEffectModifier:Ctor()
+    self.attributeType = 0
+    ---@type ModifierMagnitudeCalculation
+    self.mmc = nil
+    self.modifierMagnitude = 0
+
+    self.operation = ModifierOperation.Additive
+end
+
+---@param geSpec  GameplayEffectSpec
+function GameplayEffectModifier:CalculateMagnitude(geSpec)
+    if self.mmc then
+        return self.mmc:CalculateMagnitude(geSpec, self.modifierMagnitude)
+    else
+        return self.modifierMagnitude
+    end
+end
+
+return GameplayEffectModifier
