@@ -15,6 +15,3 @@ local classB = battle.class("b", classA)
 function classB:Ctor()
     print("classB:Ctor")
 end
-
-local inst = classB()
-inst:hello()

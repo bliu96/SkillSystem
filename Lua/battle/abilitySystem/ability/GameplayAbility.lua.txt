@@ -2,7 +2,9 @@
 local GameplayAbility = battle.class("GameplayAbility")
 
 function GameplayAbility:Ctor()
-    
+    self.tag = nil
+    self.cost = nil
+    -- todo 其他配置
 end
 
 return GameplayAbility

@@ -1,3 +1,18 @@
-local NormalAttack = battle.class("NormalAttack")
+---@class NormalAttack : GameplayAbilitySpec
+local NormalAttack = battle.class("NormalAttack", require("battle.abilitySystem.ability.GameplayAbilitySpec"))
+
+function NormalAttack:Ctor()
+    
+end
+
+function NormalAttack:CanActivateAbility()
+    return true
+end
+
+function NormalAttack:ActivateAbility()
+    -- todo 添加技能效果
+
+    self:EndAbility()
+end
 
 return NormalAttack

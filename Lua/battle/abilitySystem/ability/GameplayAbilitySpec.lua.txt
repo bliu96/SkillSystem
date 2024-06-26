@@ -1,9 +1,13 @@
 ---@class GameplayAbilitySpec
 local GameplayAbilitySpec = battle.class("GameplayAbilitySpec")
 
-function GameplayAbilitySpec:Ctor()
+---@param ability  GameplayAbility
+function GameplayAbilitySpec:Ctor(ability)
+    ---@type AbilitySystemComponent
     self.owner = nil
     self.isActive = false
+    ---@type GameplayAbility
+    self.ability = ability
 end
 
 function GameplayAbilitySpec:CanActivateAbility()
