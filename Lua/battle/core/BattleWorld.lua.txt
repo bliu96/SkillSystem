@@ -1,0 +1,43 @@
+local BattleUnit = require("battle.core.BattleUnit")
+local Identity = battle.enums.Identity
+
+---@class BattleWorld
+---@field New fun() : BattleWorld
+local BattleWorld = battle.class("BattleWorld")
+
+---@param battleInstance BattleInstance
+function BattleWorld:Ctor(battleInstance)
+    self._battleInst = battleInstance
+
+    ---@type BattleUnit[]
+    self._units = {}
+    ---@type BattleUnit[]
+    self._aliveUnits = {}
+
+    self._unitDataList = {}
+end
+
+function BattleWorld:InitWorld()
+
+end
+
+function BattleWorld:BornUnits(identity, wave)
+    for i, v in ipairs(self._unitDataList) do
+        if v.identity == identity and v.wave == wave then
+            local battleUnit = BattleUnit.New(v)
+            table.insert(self._units, battleUnit)
+        end
+    end
+end
+
+---@return BattleUnit[]
+function BattleWorld:GetUnits()
+    return self._units
+end
+
+---@return BattleUnit[]
+function BattleWorld:GetAliveUnits()
+   return self._aliveUnits 
+end
+
+return BattleWorld

@@ -1,0 +1,12 @@
+local TableUtils = {
+    RemoveListItem = function (list, item)
+        for i, v in ipairs(list) do
+            if v == item then
+                table.remove(list, i)
+                return v
+            end
+        end
+    end
+}
+
+return TableUtils

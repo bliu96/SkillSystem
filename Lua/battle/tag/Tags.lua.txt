@@ -1,0 +1,19 @@
+local tags = {
+    State = {
+        Dead = nil,
+    }
+}
+
+local function TraverseTags(t, parent)
+    for k, v in pairs(t) do
+        if not v then
+            t[k] = parent .. k
+        else
+            parent = parent .. k .."."
+        end
+    end
+end
+
+TraverseTags(tags)
+
+return tags

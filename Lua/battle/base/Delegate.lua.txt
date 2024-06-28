@@ -1,6 +1,7 @@
 battle = battle or {}
 
 ---@class battle.Delegate
+---@field New fun() : battle.Delegate
 local Delegate = battle.class("Delegate")
 
 function Delegate:Ctor()

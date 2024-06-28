@@ -1,6 +1,6 @@
 battle = battle or {}
 
-function battle.wrap(self, func)
+function battle.bind(self, func)
 	return function(...)
 		return func(self, ...)
 	end

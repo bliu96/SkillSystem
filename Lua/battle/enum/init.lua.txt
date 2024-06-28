@@ -1,13 +1,11 @@
 battle = battle or {}
 
 local enums = {
-    ---@class DurationPolicy
     DurationPolicy = {
         Instant = 1,
         Infinite = 2,
         HasDuration = 3,
     },
-    ---@class ModifierOperation
     ModifierOperation = {
         Additive = 1,
         Subtractive = 2,
@@ -16,6 +14,10 @@ local enums = {
         Override = 5,
         Max = 6,
     },
+    Identity = {
+        Left = 1,
+        Right = 2,
+    }
 }
 
 battle.enums = enums

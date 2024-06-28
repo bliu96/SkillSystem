@@ -1,0 +1,22 @@
+---@class battle.ConditionTrigger
+---@field New fun(): battle.ConditionTrigger
+local ConditionTrigger = battle.class("battle.ConditionTrigger")
+
+function ConditionTrigger:Ctor()
+    self.onTrigger = battle.Delegate.New()
+end
+
+function ConditionTrigger:OnAdded()
+    
+end
+
+function ConditionTrigger:OnRemoved()
+    
+end
+
+---@private
+function ConditionTrigger:InvokeOnTrigger()
+    self.onTrigger:Invoke()
+end
+
+return ConditionTrigger

@@ -6,11 +6,12 @@ local GameplayEffect = battle.class("GameplayEffect")
 function GameplayEffect:Ctor()
     ---@type GameplayEffectModifier[]
     self.modifiers = nil
-    ---@type GameplayEffectTags
-    self.tags = nil
     ---@type number
     self.period = nil
     self.durationPolicy = DurationPolicy.Instant
+
+    ---@type GamePlayTag[]
+    self.grantedTags = nil
 end
 
 function GameplayEffect:OnAddedToActiveContainer()

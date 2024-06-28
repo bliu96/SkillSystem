@@ -1,10 +1,11 @@
 ---@class AttributeSet
+---@field New fun(atrributes: table<number, number>) : AttributeSet
 local AttributeSet = battle.class("AttributeSet")
 
-function AttributeSet:Ctor(initialAtrributes)
-    self.initialAtrributes = initialAtrributes
+function AttributeSet:Ctor(atrributes)
+    self.initialAtrributes = atrributes or {}
     
-    self._baseAttrs = setmetatable({}, {__index = initialAtrributes})
+    self._baseAttrs = setmetatable({}, {__index = atrributes})
     self._currentAttrs = setmetatable({}, {__index = self._baseAttrs})
 end
 

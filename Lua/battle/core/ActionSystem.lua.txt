@@ -1,0 +1,28 @@
+---@class ActionSystem
+---@field New fun() : ActionSystem
+local ActionSystem = battle.class("ActionSystem")
+
+function ActionSystem:Ctor()
+    ---@type BattleUnit[]
+    self._queue = {}
+end
+
+---@return BattleUnit
+function ActionSystem:NextActionUnit()
+    return table.remove(self._queue, 1)
+end
+
+function ActionSystem:IsEmpty()
+    return next(self._queue) == nil
+end
+
+---@param units BattleUnit[]
+function ActionSystem:BuildQueue(units)
+    if next(self._queue) then
+        self._queue = {}
+    end
+    local queue = self._queue
+    
+end
+
+return ActionSystem

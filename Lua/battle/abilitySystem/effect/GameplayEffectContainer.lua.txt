@@ -1,11 +1,12 @@
 local AttributeAggregator = require("battle.effect.AttributeAggregator")
 
 ---@class GameplayEffectContainer
+---@field New fun() : GameplayEffectContainer
 local GameplayEffectContainer = battle.class("GameplayEffectContainer")
 
 function GameplayEffectContainer:Ctor()
     ---@type AbilitySystemComponent
-    self.asc = nil
+    self.owner = nil
     ---@type GameplayEffectSpec[]
     self._geSpecs = {}
     ---@type table<number, AttributeAggregator>
@@ -39,6 +40,7 @@ end
 ---@param geSpec GameplayEffectSpec
 function GameplayEffectContainer:AddActiveGameplayEffectTagsAndModifiers(geSpec)
     local effectDef = geSpec.def
+    --- modifiers
     if effectDef.period <= 0 then
         local modifiers = effectDef.modifiers
         for i, modifier in ipairs(modifiers) do
@@ -46,7 +48,7 @@ function GameplayEffectContainer:AddActiveGameplayEffectTagsAndModifiers(geSpec)
             local aggregator = self._attributeAggregatorMap[attributeType]
             if not aggregator then
                 aggregator = AttributeAggregator.New(attributeType)
-                aggregator.onDirty:Add(battle.wrap(self, self._OnAttributeAggregatorDirty))
+                aggregator.onDirty:Add(battle.bind(self, self._OnAttributeAggregatorDirty))
                 
                 self._attributeAggregatorMap[attributeType] = aggregator
             end
@@ -54,11 +56,17 @@ function GameplayEffectContainer:AddActiveGameplayEffectTagsAndModifiers(geSpec)
             aggregator:AddAggregatorMod(evaluatedMagnitude, modifier.operation, geSpec)
         end
     end
+
+    ---tags
+    local owner = self.owner
+    owner:AddTags(effectDef.grantedTags)
 end
 
 ---@param geSpec GameplayEffectSpec
 function GameplayEffectContainer:RemoveActiveGameplayEffectTagsAndModifiers(geSpec)
     local effectDef = geSpec.def
+
+    --- modifiers
     if effectDef.period <= 0 then
         local modifiers = effectDef.modifiers
         for i, modifier in ipairs(modifiers) do
@@ -69,6 +77,10 @@ function GameplayEffectContainer:RemoveActiveGameplayEffectTagsAndModifiers(geSp
             end
         end
     end
+
+    ---tags
+    local owner = self.owner
+    owner:RemoveTags(effectDef.grantedTags)
 end
 
 function GameplayEffectContainer:Tick(dt)
@@ -92,7 +104,7 @@ end
 
 ---@param geSpec GameplayEffectSpec
 function GameplayEffectContainer:ExecuteGameplayEffectFrom(geSpec)
-    local attributeSet = self.asc.attributeSet
+    local attributeSet = self.owner.attributeSet
     local modifiers = geSpec.def.modifiers
     for i, modifier in ipairs(modifiers) do
         local attributeType = modifier.attributeType
@@ -104,13 +116,13 @@ function GameplayEffectContainer:ExecuteGameplayEffectFrom(geSpec)
 end
 
 function GameplayEffectContainer:ApplyModToAttribute(attributeType, modifierOp, magnitude)
-    local currentBase = self.asc.attributeSet:GetBaseValue(attributeType)
+    local currentBase = self.owner.attributeSet:GetBaseValue(attributeType)
     local newBase = AttributeAggregator.StaticExecModOnBaseValue(currentBase, modifierOp, magnitude)
     self:SetAttributeBaseValue(attributeType, newBase)
 end
 
 function GameplayEffectContainer:SetAttributeBaseValue(attributeType, newValue)
-    local attributeSet = self.asc.attributeSet
+    local attributeSet = self.owner.attributeSet
     attributeSet:SetBaseValue(attributeType, newValue)
 
     local aggregator = self._attributeAggregatorMap[attributeType]
@@ -124,7 +136,7 @@ function GameplayEffectContainer:_OnAttributeAggregatorDirty(aggregator)
     local attributeType = aggregator.attributeType
     -- todo 回合制游戏不会即使更新，应该有统一更新的时间点
 
-    local attributeSet = self.asc.attributeSet
+    local attributeSet = self.owner.attributeSet
     local baseValue = attributeSet:GetBaseValue(attributeType)
     local currentValue = aggregator:EvaluateWithBase(baseValue)
     attributeSet:SetCurrentValue(attributeType, currentValue)

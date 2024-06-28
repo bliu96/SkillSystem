@@ -1,8 +1,0 @@
----@class WaitRoundStartTrigger : PassiveTrigger
-local WaitRoundStartTrigger = battle.class("WaitRoundStartTrigger", require("battle.trigger.PassiveTrigger"))
-
-function WaitRoundStartTrigger:Ctor()
-    
-end
-
-return WaitRoundStartTrigger

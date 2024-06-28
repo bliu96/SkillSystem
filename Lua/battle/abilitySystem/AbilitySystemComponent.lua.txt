@@ -1,15 +1,27 @@
+local GameplayTagContainer = require("battle.abilitySystem.tag.GameplayTagContainer")
+local GameplayEffectContainer = require("battle.abilitySystem.effect.GameplayEffectContainer")
+local AttributeSet = require("battle.abilitySystem.attribute.AttributeSet")
+
 local DurationPolicy = battle.enums.DurationPolicy
 
 ---@class AbilitySystemComponent
+---@field New fun() : AbilitySystemComponent
 local AbilitySystemComponent = battle.class("AbilitySystemComponent")
 
 function AbilitySystemComponent:Ctor()
     ---@type AttributeSet
     self.attributeSet = nil
     ---@type GameplayEffectContainer
-    self.gameplayEffectContainer = {}
+    self.gameplayEffectContainer = GameplayEffectContainer.New()
     ---@type GameplayAbilitySpec[]
     self.grantedAbilities = {}
+    ---@type GameplayTagContainer
+    self.tagContainer = GameplayTagContainer.New()
+end
+
+---@param attributes table<number, number>
+function AbilitySystemComponent:InitAttributeSet(attributes)
+    self.attributeSet = AttributeSet.New(attributes)
 end
 
 ---@param abilitySpec GameplayAbilitySpec
@@ -64,6 +76,20 @@ end
 ---@param geSpec GameplayEffectSpec
 function AbilitySystemComponent:ExecuteGameplayEffect(geSpec)
     self.gameplayEffectContainer:ExecuteGameplayEffectFrom(geSpec)
+end
+
+---@param tags GamePlayTag[]
+function AbilitySystemComponent:AddTags(tags)
+    if tags then
+        self.tagContainer:AddTags(tags)
+    end
+end
+
+---@param tags GamePlayTag[]
+function AbilitySystemComponent:RemoveTags(tags)
+    if tags then
+        self.tagContainer:RemoveTags(tags)
+    end
 end
 
 function AbilitySystemComponent:TickComponent(dt)

@@ -1,0 +1,57 @@
+local ActionSystem = require("battle.core.ActionSystem")
+local Identity = battle.enums.Identity
+
+---战斗规则相关
+---@class BattleMode
+---@field New fun() : BattleMode
+local BattleMode = battle.class("BattleMode")
+
+---@param battleInstance BattleInstance
+function BattleMode:Ctor(battleInstance)
+    self._battleInst = battleInstance
+    self._world = battleInstance.world
+    self._state = battleInstance.state
+
+    self._actionSystem = ActionSystem.New()
+end
+
+function BattleMode:StartBattle()
+    local wave, round = 1, 1
+    self._state:SetRound(round)
+    self._state:SetWave(wave)
+
+    self._world:BornUnits(Identity.Left, wave)
+    self._world:BornUnits(Identity.Right, wave)
+    self._actionSystem:BuildQueue(self._world:GetAliveUnits())
+end
+
+function BattleMode:Tick()
+    local battleUnit = self._actionSystem:NextActionUnit()
+    if battleUnit then
+        battleUnit:Tick()
+    end
+
+    -- todo 波次or战斗结束?
+    local waveFinish = false
+    if waveFinish then
+        local nextWaveIdentity = Identity.Right
+        local wave = self._state:GetWave()
+        self._state:AddWave()
+        self._world:BornUnits(nextWaveIdentity, wave + 1)
+    end
+
+    local battleFinish = false
+    if battleFinish then
+
+        return
+    end
+
+    if self._actionSystem:IsEmpty() then
+        -- todo 下一回合
+        self._state:AddRound()
+        self._actionSystem:BuildQueue(self._world:GetAliveUnits())
+    end
+
+end
+
+return BattleMode

@@ -1,0 +1,43 @@
+---战斗状态相关
+---@class BattleState
+---@field New fun() : BattleState
+local BattleState = require("BattleState")
+
+---@param battleInstance BattleInstance
+function BattleState:Ctor(battleInstance)
+    self._battleInst = battleInstance
+
+    self._round = 1
+    self._wave = 1
+
+    self._winIdentity = nil
+    self._isFinish = false
+end
+
+---@return number
+function BattleState:GetRound()
+    return self._round
+end
+
+---@return number
+function BattleState:GetWave()
+    return self._wave
+end
+
+function BattleState:SetRound(value)
+    self._round = value
+end
+
+function BattleState:SetWave(value)
+    self._wave = value
+end
+
+function BattleState:AddRound()
+    self._round = self._round + 1
+end
+
+function BattleState:AddWave()
+    self._wave = self._wave + 1
+end
+
+return BattleState

@@ -1,0 +1,35 @@
+local AbilitySystemComponent = require("battle.abilitySystem.AbilitySystemComponent")
+
+---@class BattleUnit
+---@field New fun() : BattleUnit
+local BattleUnit = battle.class("BattleUnit")
+
+function BattleUnit:Ctor()
+    self.uid = 0
+    self.identity = battle.enums.Identity.Left
+    self.index = 1
+
+    local asc = AbilitySystemComponent.New()
+    self.asc = asc
+
+    local attributes = {}
+    asc:InitAttributeSet(attributes)
+
+    local abilities = {}
+    for i, ability in ipairs(abilities) do
+        asc:GrantAbility(ability)
+    end
+end
+
+function BattleUnit:Tick()
+    self.asc:TickComponent(0.5)
+    -- todo Choose Ability
+    -- before Action
+
+    --- action
+    self.asc:TickComponent(0.5)
+    --- after action
+
+end
+
+return BattleUnit
