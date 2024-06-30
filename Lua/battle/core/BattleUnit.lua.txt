@@ -4,10 +4,11 @@ local AbilitySystemComponent = require("battle.abilitySystem.AbilitySystemCompon
 ---@field New fun() : BattleUnit
 local BattleUnit = battle.class("BattleUnit")
 
-function BattleUnit:Ctor()
+function BattleUnit:Ctor(unitData, world)
     self.uid = 0
     self.identity = battle.enums.Identity.Left
     self.index = 1
+    self.world = world
 
     local asc = AbilitySystemComponent.New()
     self.asc = asc

@@ -1,11 +1,11 @@
 ---战斗状态相关
 ---@class BattleState
----@field New fun() : BattleState
+---@field New fun(world : BattleWorld) : BattleState
 local BattleState = require("BattleState")
 
----@param battleInstance BattleInstance
-function BattleState:Ctor(battleInstance)
-    self._battleInst = battleInstance
+---@param world BattleWorld
+function BattleState:Ctor(world)
+    self._world = world
 
     self._round = 1
     self._wave = 1

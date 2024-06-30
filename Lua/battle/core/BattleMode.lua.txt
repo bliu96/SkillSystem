@@ -3,22 +3,19 @@ local Identity = battle.enums.Identity
 
 ---战斗规则相关
 ---@class BattleMode
----@field New fun() : BattleMode
+---@field New fun(world : BattleWorld) : BattleMode
 local BattleMode = battle.class("BattleMode")
 
----@param battleInstance BattleInstance
-function BattleMode:Ctor(battleInstance)
-    self._battleInst = battleInstance
-    self._world = battleInstance.world
-    self._state = battleInstance.state
+---@param world BattleWorld
+function BattleMode:Ctor(world)
+    self._world = world
+    self._state = world.state
 
     self._actionSystem = ActionSystem.New()
 end
 
-function BattleMode:StartBattle()
-    local wave, round = 1, 1
-    self._state:SetRound(round)
-    self._state:SetWave(wave)
+function BattleMode:InitMode()
+    local wave = self._state:GetWave()
 
     self._world:BornUnits(Identity.Left, wave)
     self._world:BornUnits(Identity.Right, wave)
