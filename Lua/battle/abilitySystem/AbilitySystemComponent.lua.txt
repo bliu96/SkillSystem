@@ -1,5 +1,6 @@
 local GameplayTagContainer = require("battle.abilitySystem.tag.GameplayTagContainer")
 local GameplayEffectContainer = require("battle.abilitySystem.effect.GameplayEffectContainer")
+local GameplayEffectSpec = require("battle.abilitySystem.effect.GameplayEffectSpec")
 local AttributeSet = require("battle.abilitySystem.attribute.AttributeSet")
 
 local DurationPolicy = battle.enums.DurationPolicy
@@ -90,6 +91,39 @@ function AbilitySystemComponent:RemoveTags(tags)
     if tags then
         self.tagContainer:RemoveTags(tags)
     end
+end
+
+---@param tags GamePlayTag[]
+function AbilitySystemComponent:HasAnyTags(tags)
+    if tags then
+        return self.tagContainer:HasAny(tags)
+    end 
+    return false
+end
+
+---@param tags GamePlayTag[]
+function AbilitySystemComponent:HasAllTags(tags)
+    if tags then
+        return self.tagContainer:HasAll(tags)
+    end 
+    return false
+end
+
+
+-- todo 后面看是否可以改为直接使用geSpec
+---@param ge GameplayEffect
+function AbilitySystemComponent:CanApplyAttributeModifiers(ge)
+    local geSpec = GameplayEffectSpec.New(ge)
+    local modifiers = ge.modifiers
+    for i, modifier in ipairs(modifiers) do
+        local costValue = modifier:CalculateMagnitude(geSpec)
+        local currentValue = self.attributeSet:GetCurrentValue(modifier.attributeType)
+        if costValue > currentValue then
+            return false
+        end
+    end
+
+    return true
 end
 
 function AbilitySystemComponent:TickComponent(dt)

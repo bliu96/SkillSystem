@@ -2,6 +2,7 @@
 ---@field evaluatedMagnitude number
 
 ---@class GameplayEffectSpec
+---@field New fun(ge : GameplayEffect) : GameplayEffectSpec
 local GameplayEffectSpec = battle.class("GameplayEffectSpec")
 
 ---@param gameplayEffect GameplayEffect

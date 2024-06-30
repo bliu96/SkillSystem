@@ -1,17 +1,46 @@
+local GameplayEffectSpec = require("abilitySystem.effect.GameplayEffectSpec")
+
 ---@class GameplayAbilitySpec
 local GameplayAbilitySpec = battle.class("GameplayAbilitySpec")
 
 ---@param ability  GameplayAbility
 function GameplayAbilitySpec:Ctor(ability)
     ---@type AbilitySystemComponent
-    self.owner = nil
+    self.asc = nil
     self.isActive = false
     ---@type GameplayAbility
     self.ability = ability
+    ---@type GameplayEffect
+    self.cost = ability.cost
 end
 
 function GameplayAbilitySpec:CanActivateAbility()
+    if not self:DoesAbilitySatisfyTagRequirements() then
+        return false
+    end
+    if not self:CheckCost() then
+        return false
+    end
+    return true
+end
+
+function GameplayAbilitySpec:DoesAbilitySatisfyTagRequirements()
+    -- todo asc上的tag释放满足释放该技能
+    local activationBlockedTags = self.ability.activationBlockedTags
+    if activationBlockedTags then
+        if self.asc:HasAnyTags(activationBlockedTags) then
+            return false
+        end
+    end
+
+    local activationRequiredTags = self.ability.activationRequiredTags
+    if activationRequiredTags then
+        if not self.asc:HasAllTags(activationRequiredTags) then
+            return false
+        end
+    end
     
+    return true
 end
 
 function GameplayAbilitySpec:ActivateAbility()
@@ -20,6 +49,32 @@ end
 
 function GameplayAbilitySpec:EndAbility()
     
+end
+
+function GameplayAbilitySpec:CommitAbility()
+    if self.cost then
+        self:ApplyGameplayEffectToOwner(self.cost)
+    end
+end
+
+function GameplayAbilitySpec:CheckCost()
+    if not self.cost then
+        return true
+    end
+    if not self.asc:CanApplyAttributeModifiers(self.cost) then
+        return false
+    end
+    return true
+end
+
+---@param ge GameplayEffect
+function GameplayAbilitySpec:ApplyGameplayEffectToOwner(ge)
+    local geSpec = GameplayEffectSpec.New(ge)
+    self:ApplyGameplayEffectSpecToOwner(geSpec)
+end
+
+function GameplayAbilitySpec:ApplyGameplayEffectSpecToOwner(geSpec)
+    self.asc:ApplyGameplayEffectSpecToSelf(geSpec)
 end
 
 return GameplayAbilitySpec

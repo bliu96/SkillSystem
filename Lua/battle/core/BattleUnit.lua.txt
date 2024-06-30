@@ -10,6 +10,10 @@ function BattleUnit:Ctor(unitData, world)
     self.index = 1
     self.world = world
 
+    self:InitAbilitySystem()
+end
+
+function BattleUnit:InitAbilitySystem()
     local asc = AbilitySystemComponent.New()
     self.asc = asc
 
@@ -23,14 +27,18 @@ function BattleUnit:Ctor(unitData, world)
 end
 
 function BattleUnit:Tick()
-    self.asc:TickComponent(0.5)
-    -- todo Choose Ability
     -- before Action
-
     --- action
-    self.asc:TickComponent(0.5)
+    local ability = self:ChooseAbility()
+    if ability then
+        self.asc:TryActivateAbility(ability)
+    end
     --- after action
+end
 
+---@return GameplayAbilitySpec | nil
+function BattleUnit:ChooseAbility()
+    return nil
 end
 
 return BattleUnit

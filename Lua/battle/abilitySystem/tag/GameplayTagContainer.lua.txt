@@ -38,4 +38,26 @@ function GameplayTagContainer:RemoveTags(tags)
     end
 end
 
+---@param tags GamePlayTag[]
+function GameplayTagContainer:HasAny(tags)
+    for i, tag in ipairs(tags) do
+        local count = self._countMap[tag.hashCode] or 0
+        if count > 0 then
+            return true
+        end
+    end
+    return false
+end
+
+---@param tags GamePlayTag[]
+function GameplayTagContainer:HasAll(tags)
+    for i, tag in ipairs(tags) do
+        local count = self._countMap[tag.hashCode] or 0
+        if count <= 0 then
+            return false
+        end
+    end
+    return true
+end
+
 return GameplayTagContainer
