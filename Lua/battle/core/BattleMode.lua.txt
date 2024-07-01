@@ -11,7 +11,7 @@ function BattleMode:Ctor(world)
     self._world = world
     self._state = world.state
 
-    self._actionSystem = ActionSystem.New()
+    self._actionSystem = ActionSystem.New(world)
 end
 
 function BattleMode:InitMode()
@@ -19,36 +19,97 @@ function BattleMode:InitMode()
 
     self._world:BornUnits(Identity.Left, wave)
     self._world:BornUnits(Identity.Right, wave)
-    self._actionSystem:BuildQueue(self._world:GetAliveUnits())
+    self._actionSystem:BuildQueue()
 end
 
 function BattleMode:Tick()
-    local battleUnit = self._actionSystem:NextActionUnit()
-    if battleUnit then
-        battleUnit:Tick()
-    end
-
-    -- todo 波次or战斗结束?
-    local waveFinish = false
-    if waveFinish then
-        local nextWaveIdentity = Identity.Right
-        local wave = self._state:GetWave()
-        self._state:AddWave()
-        self._world:BornUnits(nextWaveIdentity, wave + 1)
-    end
-
-    local battleFinish = false
-    if battleFinish then
-
+    if self._state:IsFinish() then
         return
     end
 
-    if self._actionSystem:IsEmpty() then
-        -- todo 下一回合
+    if self._state:IsRoundFinish() then
         self._state:AddRound()
-        self._actionSystem:BuildQueue(self._world:GetAliveUnits())
+        self._actionSystem:BuildQueue()
+        -- todo 回合开始事件
+        self._state:SetRoundFinish(false)
     end
 
+    local parallelAction = self._actionSystem:GetNextParallelAction()
+    while parallelAction do
+        self:ExecuteAction(parallelAction)
+    end
+
+    local sequenceAction = self._actionSystem:GetNextSequenceAction()
+    if sequenceAction then
+        self:ExecuteAction(sequenceAction)
+    else
+        local battleUnit = self._actionSystem:GetNextActionUnit()
+        if battleUnit then
+            battleUnit:Tick()
+        end
+    end
+
+    parallelAction = self._actionSystem:GetNextParallelAction()
+    while parallelAction do
+        self:ExecuteAction(parallelAction)
+    end
+    
+    if self._actionSystem:IsEmpty() then
+        self._state:SetRoundFinish(true)
+    end
+
+    self:CheckWaveFinish()
+
+    local battleFinish = self:CheckBattleFinish()
+    if battleFinish then
+        
+    else
+        if self._state:IsWaveFinish() then
+            self:UpdateNextWave()
+        end
+    end
+end
+
+---@param action ActionSystem.Action
+function BattleMode:ExecuteAction(action)
+    local unit = action.unit
+    local abilitySpec = action.ability
+    unit.asc:TryActivateAbility(abilitySpec)
+end
+
+function BattleMode:CheckBattleFinish()
+    if self._state:IsRoundFinish() then
+        -- todo 最大回合
+    end
+    ---有一方全部阵亡、且无下一波
+
+    -- local winner = Identity.Left
+    -- self._state:SetWinner(winner)
+
+    return false
+end
+
+function BattleMode:CheckWaveFinish()
+    ---现在只有右边全不阵亡才换波次
+    local allDead = true
+    local RightIdentity = Identity.Right
+    local DeadTag = battle.tags.State.Dead
+    for i = 1, battle.enums.UnitMaxIndex do
+        local unit = self._world:GetUnit(RightIdentity, i)
+        if unit and not unit.asc:HasAnyTags({DeadTag}) then
+            allDead = false
+            break
+        end
+    end
+    if allDead then
+        self._state:SetWaveFinish(true)
+    end
+end
+
+function BattleMode:UpdateNextWave()
+    self._state:AddWave()
+    local wave = self._state:GetWave()
+    self._world:BornUnits(Identity.Right, wave)
 end
 
 return BattleMode

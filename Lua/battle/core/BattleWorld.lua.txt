@@ -32,6 +32,17 @@ function BattleWorld:BornUnits(identity, wave)
     end
 end
 
+---@return BattleUnit | nil
+function BattleWorld:GetUnit(identity, index)
+    -- todo 字典
+    for i, unit in ipairs(self._units) do
+        if unit.identity == identity and unit.index == index then
+            return unit
+        end
+    end
+    return nil
+end
+
 ---@return BattleUnit[]
 function BattleWorld:GetUnits()
     return self._units

@@ -16,4 +16,5 @@ end
 
 TraverseTags(tags)
 
-return tags
+battle = battle or {}
+battle.tags = tags

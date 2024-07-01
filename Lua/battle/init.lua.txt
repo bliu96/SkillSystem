@@ -2,3 +2,4 @@
 battle = battle or {}
 
 require("battle.base.init")
+require("battle.tag.init")

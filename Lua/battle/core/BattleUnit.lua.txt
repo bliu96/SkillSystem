@@ -1,7 +1,7 @@
 local AbilitySystemComponent = require("battle.abilitySystem.AbilitySystemComponent")
 
 ---@class BattleUnit
----@field New fun() : BattleUnit
+---@field New fun(unitData, world : BattleWorld) : BattleUnit
 local BattleUnit = battle.class("BattleUnit")
 
 function BattleUnit:Ctor(unitData, world)
@@ -39,6 +39,10 @@ end
 ---@return GameplayAbilitySpec | nil
 function BattleUnit:ChooseAbility()
     return nil
+end
+
+function BattleUnit:Die()
+    
 end
 
 return BattleUnit

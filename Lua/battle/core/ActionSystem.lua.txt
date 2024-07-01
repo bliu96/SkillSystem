@@ -1,28 +1,96 @@
+local Identity = battle.enums.Identity
+
+---@class ActionSystem.Action
+---@field unit BattleUnit
+---@field ability GameplayAbilitySpec
+
 ---@class ActionSystem
----@field New fun() : ActionSystem
+---@field New fun(world: BattleWorld) : ActionSystem
 local ActionSystem = battle.class("ActionSystem")
 
-function ActionSystem:Ctor()
+---@param world BattleWorld
+function ActionSystem:Ctor(world)
+    self.world = world
+
     ---@type BattleUnit[]
-    self._queue = {}
+    self._mainQueue = {}
+    ---@type ActionSystem.Action[]
+    self._parallelActions = {}
+    ---@type ActionSystem.Action[]
+    self._sequenceActions = {}
 end
 
 ---@return BattleUnit
-function ActionSystem:NextActionUnit()
-    return table.remove(self._queue, 1)
+function ActionSystem:GetNextActionUnit()
+    return table.remove(self._mainQueue, 1)
 end
 
+---@return boolean
 function ActionSystem:IsEmpty()
-    return next(self._queue) == nil
+    local mainQueueEmpty = next(self._mainQueue) == nil
+    local parallelActionEmpty = next(self._parallelActions) == nil
+    local sequenceActionEmpty = next(self._sequenceActions) == nil
+    return mainQueueEmpty and parallelActionEmpty and sequenceActionEmpty
 end
 
----@param units BattleUnit[]
-function ActionSystem:BuildQueue(units)
-    if next(self._queue) then
-        self._queue = {}
+---@return ActionSystem.Action | nil
+function ActionSystem:GetNextParallelAction()
+    if next(self._parallelActions) then
+        return table.remove(self._parallelActions, 1)
     end
-    local queue = self._queue
+    return nil
+end
+
+---@return ActionSystem.Action | nil
+function ActionSystem:GetNextSequenceAction()
+    if next(self._sequenceActions) then
+        return table.remove(self._sequenceActions, 1)
+    end
+    return nil
+end
+
+function ActionSystem:BuildQueue()
+    if next(self._mainQueue) then
+        self._mainQueue = {}
+    end
+    local queue = self._mainQueue
+
+    local unitMaxIndex = battle.enums.UnitMaxIndex
+
+    ---@return BattleUnit | nil, number | nil
+    local function GetNextUnit(identity, index)
+        if index > unitMaxIndex then
+            return nil
+        end
+        local unit = self.world:GetUnit(identity, index)
+        if unit then
+            return unit, index + 1
+        end
+        return GetNextUnit(identity, index + 1)
+    end
     
+    local highPriorityIdentity = Identity.Left
+    local lowPriorityIdentity = battle.enums.OpIdentity[highPriorityIdentity]
+
+    local unit
+    ---@type number | nil
+    local index1 = 1
+    ---@type number | nil
+    local index2 = 1
+    repeat
+        if index1 then
+            unit, index1 = GetNextUnit(highPriorityIdentity, index1)
+            if unit then
+                table.insert(queue, unit)
+            end
+        end
+        if index2 then
+            unit, index2 = GetNextUnit(lowPriorityIdentity, index2)
+            if unit then
+                table.insert(queue, unit)
+            end
+        end
+    until index1 == nil and index2 == nil
 end
 
 return ActionSystem

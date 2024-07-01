@@ -10,8 +10,9 @@ function BattleState:Ctor(world)
     self._round = 1
     self._wave = 1
 
+    self._roundFinish = false
+    self._waveFinish = false
     self._winIdentity = nil
-    self._isFinish = false
 end
 
 ---@return number
@@ -38,6 +39,34 @@ end
 
 function BattleState:AddWave()
     self._wave = self._wave + 1
+end
+
+function BattleState:IsFinish()
+    return self._winIdentity == nil
+end
+
+function BattleState:SetWinner(identity)
+    self._winIdentity = identity
+end
+
+function BattleState:GetWinIdentity()
+    return self._winIdentity
+end
+
+function BattleState:SetRoundFinish(value)
+    self._roundFinish = value
+end
+
+function BattleState:IsRoundFinish()
+    return self._roundFinish
+end
+
+function BattleState:SetWaveFinish(value)
+    self._waveFinish = value
+end
+
+function BattleState:IsWaveFinish()
+    return self._waveFinish
 end
 
 return BattleState
