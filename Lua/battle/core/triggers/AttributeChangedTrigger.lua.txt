@@ -1,0 +1,22 @@
+---@class AttributeChangedTrigger : battle.ConditionTrigger
+local AttributeChangedTrigger = battle.class("AttributeChangedTrigger", require("battle.abilitySystem.condition.ConditionTrigger"))
+
+---@param asc AbilitySystemComponent
+function AttributeChangedTrigger:Ctor(asc, attributeType)
+    self.asc = asc
+    self.attributeType = attributeType
+
+    self._action = battle.bind(self, self.InvokeOnTrigger)
+end
+
+function AttributeChangedTrigger:OnActivate()
+    local delegate = self.asc:GetGameplayAttributeValueChangeDelegate(self.attributeType)
+    delegate:Add(self._action)
+end
+
+function AttributeChangedTrigger:OnDeactivate()
+    local delegate = self.asc:GetGameplayAttributeValueChangeDelegate(self.attributeType)
+    delegate:Remove(self._action)
+end
+
+return AttributeChangedTrigger

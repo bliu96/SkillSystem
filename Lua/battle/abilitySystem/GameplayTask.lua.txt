@@ -1,0 +1,55 @@
+---@class GameplayTask
+local GameplayTask = battle.class("GameplayTask")
+
+function GameplayTask:Ctor()
+    -- self._state = nil
+    self._active = false
+
+    self.onChanged = battle.Delegate.New()
+end
+
+-- ---@private
+-- function GameplayTask:_CheckInternal()
+--     local state = self:Check()
+--     if self._state ~= state then
+--         self._state = state
+--         self.onChanged:Invoke(state)
+--     end
+-- end
+
+function GameplayTask:InvokeOnChange(...)
+    self.onChanged:Invoke(...)
+end
+
+function GameplayTask:OnActivate()
+    
+end
+
+function GameplayTask:Activate()
+    if not self._active then
+        self._active = true
+        self:OnActivate()
+    end
+end
+
+function GameplayTask:OnDeactivate()
+    
+end
+
+function GameplayTask:Deactivate()
+    if self._active then
+        self._active = false
+        self:OnDeactivate()
+    end
+end
+
+function GameplayTask:Check()
+    return nil
+end
+
+function GameplayTask:Destroy()
+    self:Deactivate()
+    self.onChanged:Clear()
+end
+
+return GameplayTask

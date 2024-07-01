@@ -7,6 +7,8 @@ function AttributeSet:Ctor(atrributes)
     
     self._baseAttrs = setmetatable({}, {__index = atrributes})
     self._currentAttrs = setmetatable({}, {__index = self._baseAttrs})
+
+    self._onChangedListeners = nil
 end
 
 function AttributeSet:GetCurrentValue(attributeType)

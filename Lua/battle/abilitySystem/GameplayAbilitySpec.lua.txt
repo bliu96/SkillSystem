@@ -1,4 +1,4 @@
-local GameplayEffectSpec = require("abilitySystem.effect.GameplayEffectSpec")
+local GameplayEffectSpec = require("battle.abilitySystem.GameplayEffectSpec")
 
 ---@class GameplayAbilitySpec
 local GameplayAbilitySpec = battle.class("GameplayAbilitySpec")
@@ -43,10 +43,12 @@ function GameplayAbilitySpec:DoesAbilitySatisfyTagRequirements()
     return true
 end
 
+---每个能力实现自己逻辑
 function GameplayAbilitySpec:ActivateAbility()
     
 end
 
+---每个能力实现自己逻辑
 function GameplayAbilitySpec:EndAbility()
     
 end

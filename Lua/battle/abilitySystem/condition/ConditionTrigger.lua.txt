@@ -1,0 +1,39 @@
+---@class battle.ConditionTrigger
+---@field New fun(): battle.ConditionTrigger
+local ConditionTrigger = battle.class("ConditionTrigger")
+
+function ConditionTrigger:Ctor()
+    self._active = false
+    self.onTrigger = battle.Delegate.New()
+end
+
+function ConditionTrigger:Activate()
+    if not self._active then
+        self._active = true
+        self:OnActivate()
+    end
+end
+
+function ConditionTrigger:Deactivate()
+    if self._active then
+        self._active = false
+        self:OnDeactivate()
+    end
+end
+
+---@protected
+function ConditionTrigger:OnActivate()
+    
+end
+
+---@protected
+function ConditionTrigger:OnDeactivate()
+    
+end
+
+---@protected
+function ConditionTrigger:InvokeOnTrigger()
+    self.onTrigger:Invoke()
+end
+
+return ConditionTrigger

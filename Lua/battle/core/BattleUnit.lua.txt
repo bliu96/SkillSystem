@@ -21,7 +21,7 @@ function BattleUnit:Ctor(unitData, world)
 end
 
 function BattleUnit:InitAbilitySystem()
-    local asc = AbilitySystemComponent.New()
+    local asc = AbilitySystemComponent.New(self)
     self.asc = asc
 
     local attributes = {}

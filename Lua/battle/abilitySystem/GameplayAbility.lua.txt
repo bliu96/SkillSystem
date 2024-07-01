@@ -8,6 +8,8 @@ function GameplayAbility:Ctor()
     self.activationRequiredTags = nil
     ---@type GameplayEffect
     self.cost = nil
+    ---@type GameplayEffect[]
+    self.gameplayEffects = nil
 end
 
 return GameplayAbility

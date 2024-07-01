@@ -1,14 +1,24 @@
+local TargetSelector = require("battle.core.TargetSelector")
+local GamelayEffectSpec = require("battle.abilitySystem.GameplayEffectSpec")
+
 ---@class NormalAttack : GameplayAbilitySpec
-local NormalAttack = battle.class("NormalAttack", require("battle.abilitySystem.ability.GameplayAbilitySpec"))
+local NormalAttack = battle.class("NormalAttack", require("battle.abilitySystem.GameplayAbilitySpec"))
 
 function NormalAttack:Ctor()
     
 end
 
 function NormalAttack:ActivateAbility()
+    local gameplayEffects = self.ability.gameplayEffects
     -- todo 目标选择
-    
+    local targets = TargetSelector.SelectTargets(self.asc.owner)
     -- todo 添加技能效果
+    for i, target in ipairs(targets) do
+        for j, ge in ipairs(gameplayEffects) do
+            local geSpec = GamelayEffectSpec.New(ge)
+            target.asc:ApplyGameplayEffectSpecToSelf(geSpec)
+        end
+    end
 
     self:EndAbility()
 end

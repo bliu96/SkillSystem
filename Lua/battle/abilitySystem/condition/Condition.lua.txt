@@ -1,0 +1,68 @@
+---@class battle.Condition
+local Condition = battle.class("Condition")
+
+function Condition:Ctor()
+    self._state = nil
+    ---@type battle.ConditionTrigger[]
+    self._triggers = {}
+    self._active = false
+    self.onChanged = battle.Delegate.New()
+end
+
+---@param trigger battle.ConditionTrigger
+function Condition:AddTrigger(trigger)
+    table.insert(self._triggers, trigger)
+    trigger.onTrigger:Add(battle.bind(self, self._CheckInternal))
+    if self._active then
+        trigger:Activate()
+    end
+end
+
+---@private
+function Condition:_CheckInternal()
+    local state = self:Check()
+    if self._state ~= state then
+        self._state = state
+        self.onChanged:Invoke(state)
+    end
+end
+
+function Condition:OnActivate()
+    
+end
+
+function Condition:Activate()
+    if not self._active then
+        self._active = true
+        self:OnActivate()
+        for i, trigger in ipairs(self._triggers) do
+            trigger:Activate()
+        end
+    end
+end
+
+function Condition:OnDeactivate()
+    
+end
+
+function Condition:Deactivate()
+    if self._active then
+        self._active = false
+        self:OnDeactivate()
+        for i, trigger in ipairs(self._triggers) do
+            trigger:Deactivate()
+        end
+    end
+end
+
+function Condition:Check()
+    return nil
+end
+
+function Condition:Destroy()
+    self:Deactivate()
+    self._triggers = {}
+    self.onChanged:Clear()
+end
+
+return Condition

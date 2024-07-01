@@ -1,5 +1,22 @@
 local TargetSelector = {}
 
+---@param sourceUnit BattleUnit
+---@return BattleUnit[]
+TargetSelector.SelectTargets = function (sourceUnit)
+    local world = sourceUnit.world
+    local targets = world:GetUnits()
+    local targetsCache = {}
+    for i, v in ipairs(targets) do
+        table.insert(targetsCache, v)
+    end
+    local filterIndex = 1
+    local filter = TargetSelector["Filter"..filterIndex]
+    if filter then
+        filter(sourceUnit, targetsCache)
+    end
+    return targetsCache
+end
+
 ---@param sourceX number
 ---@param sourceY number
 ---@param targetX number
@@ -10,9 +27,10 @@ function TargetSelector.GetDistance(sourceX, sourceY, targetX, targetY)
     return manhattanDistance
 end
 
+---对位单体
 ---@param source BattleUnit
 ---@param targets BattleUnit[]
-function TargetSelector.SelectDefaultOne(source, targets)
+function TargetSelector.Filter1(source, targets)
     local minDistance = -1
     local selectedTarget = nil
     for i, target in ipairs(targets) do
@@ -26,10 +44,11 @@ function TargetSelector.SelectDefaultOne(source, targets)
     return {selectedTarget}
 end
 
+---对位列
 ---@param source BattleUnit
 ---@param targets BattleUnit[]
-function TargetSelector.SelectDefaultColumn(source, targets)
-    local selectedKnights = TargetSelector.SelectDefaultOne(source, targets)
+function TargetSelector.Filter2(source, targets)
+    local selectedKnights = TargetSelector.Filter1(source, targets)
     if next(selectedKnights) then
         local selectedKnight = selectedKnights[1]
         for i, target in ipairs(targets) do

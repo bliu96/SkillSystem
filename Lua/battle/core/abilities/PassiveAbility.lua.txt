@@ -1,0 +1,28 @@
+---@class PassiveAbility : GameplayAbilitySpec
+---@field New fun(): PassiveAbility
+local PassiveAbility = battle.class("PassiveAbility", require("battle.abilitySystem.GameplayAbilitySpec"))
+
+function PassiveAbility:ActivateAbility()
+    
+end
+
+function PassiveAbility:EndAbility()
+    
+end
+
+function PassiveAbility:CreateTriggerTask()
+    ---@type GameplayTask
+    self._triggerTask = nil
+
+    self._triggerTask.onChanged:Add(battle.bind(self, self._OnTriggerChanged))
+end
+
+function PassiveAbility:_OnTriggerChanged(value)
+    if value then
+        
+    else
+
+    end
+end
+
+return PassiveAbility

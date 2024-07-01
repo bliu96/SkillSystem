@@ -1,4 +1,4 @@
-local GameplayTagContainer = require("battle.abilitySystem.tag.GameplayTagContainer")
+local GameplayTagContainer = require("battle.abilitySystem.GameplayTagContainer")
 
 ---@class ModifierSpec
 ---@field evaluatedMagnitude number
@@ -23,10 +23,6 @@ function GameplayEffectSpec:Ctor(gameplayEffect)
 
     ---@type GameplayTagContainer
     self._dynamicTags = nil
-end
-
-function GameplayEffectSpec:Init(source)
-    self.source = source
 end
 
 function GameplayEffectSpec:CanApply()

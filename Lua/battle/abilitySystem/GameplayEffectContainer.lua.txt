@@ -11,6 +11,9 @@ function GameplayEffectContainer:Ctor()
     self._geSpecs = {}
     ---@type table<number, AttributeAggregator>
     self._attributeAggregatorMap = {}
+
+    ---@type table<number, battle.Delegate>
+    self._attributeValueChangeDelegates = {}
 end
 
 ---@param geSpec GameplayEffectSpec
@@ -128,6 +131,8 @@ function GameplayEffectContainer:SetAttributeBaseValue(attributeType, newValue)
     local aggregator = self._attributeAggregatorMap[attributeType]
     if aggregator then
         aggregator:BroadcastOnDirty()
+    else
+        self:_InternalUpdateAttribute(attributeType, newValue)
     end
 end
 
@@ -139,7 +144,27 @@ function GameplayEffectContainer:_OnAttributeAggregatorDirty(aggregator)
     local attributeSet = self.owner.attributeSet
     local baseValue = attributeSet:GetBaseValue(attributeType)
     local currentValue = aggregator:EvaluateWithBase(baseValue)
-    attributeSet:SetCurrentValue(attributeType, currentValue)
+    self:_InternalUpdateAttribute(attributeType, currentValue)
+end
+
+function GameplayEffectContainer:_InternalUpdateAttribute(attributeType, newValue)
+    local attributeSet = self.owner.attributeSet
+    local oldValue = attributeSet:GetCurrentValue(attributeType)
+    attributeSet:SetCurrentValue(attributeType, newValue)
+    local delegate = self._attributeValueChangeDelegates[attributeType]
+    if delegate then
+        delegate:Invoke(attributeType, newValue, oldValue)
+    end
+end
+
+---@return battle.Delegate
+function GameplayEffectContainer:GetGameplayAttributeValueChangeDelegate(attributeType)
+    local delegate = self._attributeValueChangeDelegates[attributeType]
+    if not delegate then
+        delegate = battle.Delegate.New()
+        self._attributeValueChangeDelegates[attributeType] = delegate
+    end
+    return delegate
 end
 
 return GameplayEffectContainer

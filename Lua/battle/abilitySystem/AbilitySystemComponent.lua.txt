@@ -1,15 +1,17 @@
-local GameplayTagContainer = require("battle.abilitySystem.tag.GameplayTagContainer")
-local GameplayEffectContainer = require("battle.abilitySystem.effect.GameplayEffectContainer")
-local GameplayEffectSpec = require("battle.abilitySystem.effect.GameplayEffectSpec")
-local AttributeSet = require("battle.abilitySystem.attribute.AttributeSet")
+local GameplayTagContainer = require("battle.abilitySystem.GameplayTagContainer")
+local GameplayEffectContainer = require("battle.abilitySystem.GameplayEffectContainer")
+local GameplayEffectSpec = require("battle.abilitySystem.GameplayEffectSpec")
+local AttributeSet = require("battle.abilitySystem.AttributeSet")
 
 local DurationPolicy = battle.enums.DurationPolicy
 
 ---@class AbilitySystemComponent
----@field New fun() : AbilitySystemComponent
+---@field New fun(owner: any) : AbilitySystemComponent
 local AbilitySystemComponent = battle.class("AbilitySystemComponent")
 
-function AbilitySystemComponent:Ctor()
+---@param owner any
+function AbilitySystemComponent:Ctor(owner)
+    self.owner = owner
     ---@type AttributeSet
     self.attributeSet = nil
     ---@type GameplayEffectContainer
@@ -124,6 +126,11 @@ function AbilitySystemComponent:CanApplyAttributeModifiers(ge)
     end
 
     return true
+end
+
+---@return battle.Delegate
+function AbilitySystemComponent:GetGameplayAttributeValueChangeDelegate(attributeType)
+    return self.gameplayEffectContainer:GetGameplayAttributeValueChangeDelegate(attributeType)
 end
 
 function AbilitySystemComponent:TickComponent(dt)

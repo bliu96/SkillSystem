@@ -1,0 +1,87 @@
+local AttributeComparison = {
+    GreaterThan = 1,
+    LessThan = 2,
+}
+
+---@class WaitAttributeChangeRatioThresholdTask : GameplayTask
+---@field New fun() : WaitAttributeChangeRatioThresholdTask
+local WaitAttributeChangeRatioThresholdTask = battle.class("WaitAttributeChangeRatioThresholdTask", require("battle.abilitySystem.condition.Condition"))
+
+---@param asc AbilitySystemComponent
+---@param args any
+function WaitAttributeChangeRatioThresholdTask:Ctor(asc, args)
+    self._lastComparisonResult = false
+
+    local attributeNumerator = args[1]
+    local attributeDenominator = args[2]
+    local comparison = args[3]
+    local comparisonValue = args[4]
+    self._attributeNumerator = attributeNumerator
+    self._attributeDenominator = attributeDenominator
+    self._comparison = comparison
+    self._comparisonValue = comparisonValue
+    
+    self._asc = asc
+
+    local attributeSet = asc.attributeSet
+    self._lastNumeratorValue = attributeSet:GetCurrentValue(attributeNumerator)
+    self._lastDenominatorValue = attributeSet:GetCurrentValue(attributeDenominator)
+    
+    self._OnNumeratorChangeAction = battle.bind(self, self._OnNumeratorChange)
+    self._OnDenominatorChangeAction = battle.bind(self, self._OnDenominatorChange)
+end
+
+function WaitAttributeChangeRatioThresholdTask:OnAttributeChange()
+    local result = self:DoesComparison()
+    if self._lastComparisonResult ~= result then
+        self._lastComparisonResult = result
+        self:InvokeOnChange(result)
+    end
+end
+
+function WaitAttributeChangeRatioThresholdTask:OnActivate()
+    local delegate = self._asc:GetGameplayAttributeValueChangeDelegate(self._attributeNumerator)
+    delegate:Add(self._OnNumeratorChangeAction)
+
+    delegate = self._asc:GetGameplayAttributeValueChangeDelegate(self._lastDenominatorValue)
+    delegate:Add(self._OnDenominatorChangeAction)
+
+    self:OnAttributeChange()
+end
+
+function WaitAttributeChangeRatioThresholdTask:OnDeactivate()
+    local delegate = self._asc:GetGameplayAttributeValueChangeDelegate(self._attributeNumerator)
+    delegate:Add(self._OnNumeratorChangeAction)
+
+    delegate = self._asc:GetGameplayAttributeValueChangeDelegate(self._lastDenominatorValue)
+    delegate:Add(self._OnDenominatorChangeAction)
+end
+
+function WaitAttributeChangeRatioThresholdTask:_OnNumeratorChange(_, newValue)
+    self._lastNumeratorValue = newValue
+    self:OnAttributeChange()
+end
+
+function WaitAttributeChangeRatioThresholdTask:_OnDenominatorChange(_, newValue)
+    self._lastDenominatorValue = newValue
+    self:OnAttributeChange()
+end
+
+function WaitAttributeChangeRatioThresholdTask:DoesComparison()
+    local comparison = self._comparison
+    local currentRatio = math.floor(self._lastNumeratorValue * 1000 / self._lastDenominatorValue);
+    local comparisonValue = self._comparisonValue
+    local pass = false
+    if comparison == AttributeComparison.GreaterThan then
+        pass = currentRatio > comparisonValue
+    elseif comparison == AttributeComparison.LessThan then
+        pass = currentRatio < comparisonValue
+    end
+    return pass
+end
+
+function WaitAttributeChangeRatioThresholdTask:Check()
+    
+end
+
+return WaitAttributeChangeRatioThresholdTask
