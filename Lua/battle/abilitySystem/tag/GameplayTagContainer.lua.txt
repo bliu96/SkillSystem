@@ -11,30 +11,40 @@ function GameplayTagContainer:Ctor()
     self._tagList = {}
 end
 
+---@param tag GamePlayTag
+function GameplayTagContainer:AddTag(tag)
+    local count = self._countMap[tag.hashCode] or 0
+    if count == 0 then
+        table.insert(self._tagList, tag)
+    end
+    count = count + 1
+    self._countMap[tag.hashCode] = count
+end
+
 ---@param tags GamePlayTag[]
 function GameplayTagContainer:AddTags(tags)
     for i, tag in ipairs(tags) do
-        local count = self._countMap[tag.hashCode] or 0
-        if count == 0 then
-            table.insert(self._tagList, tag)
-        end
-        count = count + 1
+        self:AddTag(tag)
+    end
+end
+
+---@param tag GamePlayTag
+function GameplayTagContainer:RemoveTag(tag)
+    local count = self._countMap[tag.hashCode] or 0
+    if count > 0 then
+        count = count - 1
         self._countMap[tag.hashCode] = count
+
+        if count == 0 then
+            TableUtils.RemoveListItem(self._tagList, tag)
+        end
     end
 end
 
 ---@param tags GamePlayTag[]
 function GameplayTagContainer:RemoveTags(tags)
     for i, tag in ipairs(tags) do
-        local count = self._countMap[tag.hashCode] or 0
-        if count > 0 then
-            count = count - 1
-            self._countMap[tag.hashCode] = count
-
-            if count == 0 then
-                TableUtils.RemoveListItem(self._tagList, tag)
-            end
-        end
+        self:RemoveTag(tag)
     end
 end
 

@@ -1,14 +1,21 @@
 local AbilitySystemComponent = require("battle.abilitySystem.AbilitySystemComponent")
 
 ---@class BattleUnit
----@field New fun(unitData, world : BattleWorld) : BattleUnit
+---@field New fun(unitData:BattleUnitData, world:BattleWorld) : BattleUnit
 local BattleUnit = battle.class("BattleUnit")
 
+---@param unitData BattleUnitData
+---@param world BattleWorld
 function BattleUnit:Ctor(unitData, world)
     self.uid = 0
-    self.identity = battle.enums.Identity.Left
-    self.index = 1
+    self.identity = unitData.identity
+    self.index = unitData.index
+
+    self.x = (self.index - 1) % battle.enums.UnitColumns
+    self.y = math.floor((self.index - 1) / battle.enums.UnitColumns)
+
     self.world = world
+    self.unitData = unitData
 
     self:InitAbilitySystem()
 end

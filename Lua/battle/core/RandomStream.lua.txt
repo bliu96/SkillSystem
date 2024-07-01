@@ -1,0 +1,29 @@
+local RandomStream = battle.class("RandomStream")
+
+---@param numbers number[]
+function RandomStream:Ctor(numbers)
+    ---每个数字范围是[0, 999]
+    self._numbers = numbers or {}
+    self._index = 1
+end
+
+function RandomStream:GetNextRandomNumber()
+    local randNum = self._numbers[self._index]
+    if not randNum then
+        self._index = 1
+        randNum = self._numbers[1] or 0
+    end
+    self._index = self._index + 1
+    return randNum
+end
+
+function RandomStream:BoundedRandom(low, high)
+    local randNum = self:GetNextRandomNumber()
+
+    local range = high - low + 1
+    local value = math.floor(randNum * range / 1000) + low
+
+    return value
+end
+
+return RandomStream

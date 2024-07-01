@@ -1,0 +1,3 @@
+---@class BattleUnitData
+---@field identity number
+---@field index number

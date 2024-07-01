@@ -1,6 +1,7 @@
 local BattleUnit = require("battle.core.BattleUnit")
 local BattleState = require("battle.core.BattleState")
 local BattleMode = require("battle.core.BattleMode")
+local RandomStream = require("battle.core.RandomStream")
 local Identity = battle.enums.Identity
 
 ---@class BattleWorld
@@ -17,6 +18,7 @@ function BattleWorld:Ctor()
 
     self.state = BattleState.New(self)
     self.mode = BattleMode.New(self)
+    self.randomStream = RandomStream.New({1, 500, 999})
 end
 
 function BattleWorld:InitWorld()

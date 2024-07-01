@@ -5,11 +5,9 @@ function NormalAttack:Ctor()
     
 end
 
-function NormalAttack:CanActivateAbility()
-    return true
-end
-
 function NormalAttack:ActivateAbility()
+    -- todo 目标选择
+    
     -- todo 添加技能效果
 
     self:EndAbility()

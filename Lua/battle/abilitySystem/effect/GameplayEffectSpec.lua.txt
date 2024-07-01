@@ -1,3 +1,5 @@
+local GameplayTagContainer = require("battle.abilitySystem.tag.GameplayTagContainer")
+
 ---@class ModifierSpec
 ---@field evaluatedMagnitude number
 
@@ -18,6 +20,9 @@ function GameplayEffectSpec:Ctor(gameplayEffect)
     self._duration = 0
     self._periodRemaining = self.def.period
     self.isActive = false
+
+    ---@type GameplayTagContainer
+    self._dynamicTags = nil
 end
 
 function GameplayEffectSpec:Init(source)
@@ -49,6 +54,14 @@ end
 
 --     return executePeriodic
 -- end
+
+---@param tag GamePlayTag
+function GameplayEffectSpec:AddDynamicTag(tag)
+    if not self._dynamicTags then
+        self._dynamicTags = GameplayTagContainer.New()
+    end
+    self._dynamicTags:AddTag(tag)
+end
 
 function GameplayEffectSpec:Tick(dt)
     self._periodRemaining = self._periodRemaining - dt

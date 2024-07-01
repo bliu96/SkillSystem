@@ -1,0 +1,44 @@
+local TargetSelector = {}
+
+---@param sourceX number
+---@param sourceY number
+---@param targetX number
+---@param targetY number
+---@return number
+function TargetSelector.GetDistance(sourceX, sourceY, targetX, targetY)
+    local manhattanDistance = math.abs(sourceX - targetX) + math.abs(sourceY - targetY)
+    return manhattanDistance
+end
+
+---@param source BattleUnit
+---@param targets BattleUnit[]
+function TargetSelector.SelectDefaultOne(source, targets)
+    local minDistance = -1
+    local selectedTarget = nil
+    for i, target in ipairs(targets) do
+        --- x+0.1 同一排，优先选择序号更小的
+        --- y*2 优先选前排
+        local distance = TargetSelector.GetDistance(source.x + 0.1, source.y * 2, target.x, target.y * 2)
+        if distance > minDistance then
+            selectedTarget = target
+        end
+    end
+    return {selectedTarget}
+end
+
+---@param source BattleUnit
+---@param targets BattleUnit[]
+function TargetSelector.SelectDefaultColumn(source, targets)
+    local selectedKnights = TargetSelector.SelectDefaultOne(source, targets)
+    if next(selectedKnights) then
+        local selectedKnight = selectedKnights[1]
+        for i, target in ipairs(targets) do
+           if target.x == selectedKnight.x and target.y ~= selectedKnight.y then
+                table.insert(selectedKnights, target)
+           end
+        end
+    end
+    return selectedKnights
+end
+
+return TargetSelector

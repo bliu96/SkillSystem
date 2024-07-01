@@ -22,7 +22,10 @@ local enums = {
         [2] = 1,
         [1] = 2,
     },
-    UnitMaxIndex = 6,
+    UnitColumns = 3,
+    UnitRows = 2,
 }
+
+enums.UnitMaxIndex = enums.UnitColumns * enums.UnitRows
 
 battle.enums = enums
